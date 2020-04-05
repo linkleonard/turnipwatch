@@ -2,8 +2,8 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Form, Field } from 'react-final-form'
 
-import { AddPrice } from './actions';
-import NumberInput from './NumberInput';
+import { AddPrice } from './redux/actions';
+import NumberInput from './components/NumberInput';
 
 interface FormValues {
   price: Number

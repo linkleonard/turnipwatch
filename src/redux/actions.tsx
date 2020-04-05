@@ -1,4 +1,4 @@
-import { PriceSnapshot } from './types'
+import { PriceSnapshot } from '../types'
 
 export enum ActionType {
   ADD_PRICE,
