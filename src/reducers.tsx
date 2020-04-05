@@ -1,11 +1,7 @@
 import { combineReducers } from "redux";
 
-import ActionTypes from "./actionTypes";
-import { PriceActionTypes } from "./types";
-
-export interface PriceSnapshot {
-
-}
+import { ActionType, PriceActionTypes } from './actions';
+import { PriceSnapshot } from "./types";
 
 export interface PriceHistory {
   history: PriceSnapshot[],
@@ -20,7 +16,7 @@ export function priceReducer(
   action: PriceActionTypes,
 ): PriceHistory {
   switch (action.type) {
-    case ActionTypes.ADD_PRICE:
+    case ActionType.ADD_PRICE:
       return {
         history: [
           ...state.history,
