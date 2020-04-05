@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.png';
 import './App.css';
-import Form from './PriceForm/Form';
+import Form from './PriceForm';
 
 function App() {
   return (
