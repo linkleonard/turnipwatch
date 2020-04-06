@@ -1,21 +1,9 @@
-import moment, { parseTwoDigitYear, duration } from 'moment'
+import moment from 'moment'
 import { PriceSnapshot, PriceHistory, PriceHistorySnapshot } from './types'
+import { getSliceDates, getSliceStart } from './TimeSlice'
 
 function orderByTimestamp(a: PriceSnapshot, b: PriceSnapshot): number {
   return a.timestamp.getTime() - b.timestamp.getTime()
-}
-
-export function getSliceDates(start: Date, count: Number): Date[] {
-  const startSlice = moment(start)
-  return Array(count).map((_, count) => 12 * count)
-    .map(hours => startSlice.clone().add(hours, "hours"))
-    .map(m => m.toDate())
-}
-
-export function getSliceStart(date: Date, reference: Date): Date {
-  const delta: moment.Duration = moment.duration(moment(date).diff(reference))
-  const sliceCount = Math.floor(delta.asHours() / 12)
-  return moment(reference).add(sliceCount * 12, "hours").toDate()
 }
 
 function getSnapshotsForSlices(slices: Date[], snapshots: PriceSnapshot[]): PriceHistorySnapshot[] {
