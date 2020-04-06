@@ -26,6 +26,7 @@ export default function LocalStorageApi(backing = window.localStorage): PriceApi
         const results = [...items, s]
         const payload = JSON.stringify(results)
         backing.setItem(storeKey, payload)
+        console.log("Saved to storage")
       })
     },
     list() {
@@ -42,7 +43,7 @@ export default function LocalStorageApi(backing = window.localStorage): PriceApi
               try {
                 return [itemToModel(item)]
               } catch (e) {
-                console.warn(`Error deserializing stored snapshot: $e`)
+                console.warn(`Error deserializing stored snapshot: ${e}`)
                 return []
               }
             })

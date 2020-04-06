@@ -1,14 +1,12 @@
 import { put, takeEvery, all } from 'redux-saga/effects'
 import { PriceSnapshot } from "./types";
 import { AddPrice, ActionType, AddPriceAction, SavePrice, LoadPrice } from './redux/actions';
-import NoopApi from './PriceApi/noop';
+import LocalStorageApi from './PriceApi/localstorage';
 
-const delay = (ms: number) => new Promise(res => setTimeout(res, ms))
-const priceApi = NoopApi()
+const priceApi = LocalStorageApi()
 
 export function* saveSnapshot(s: PriceSnapshot) {
-  yield delay(1000)
-  yield priceApi.add(s).then(_ => console.log("Saved to server"))
+  yield priceApi.add(s)
   yield put(SavePrice(true, s))
 }
 
