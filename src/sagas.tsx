@@ -1,6 +1,6 @@
 import { put, takeEvery, all } from 'redux-saga/effects'
 import { PriceSnapshot } from "./types";
-import { AddPrice, ActionType, AddPriceAction, SavePrice } from './redux/actions';
+import { AddPrice, ActionType, AddPriceAction, SavePrice, LoadPrice } from './redux/actions';
 import NoopApi from './PriceApi/noop';
 
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms))
@@ -18,8 +18,14 @@ export function* watchAddPrice() {
   })
 }
 
+export function* loadSnapshots() {
+  const items = yield priceApi.list()
+  yield put(LoadPrice(items))
+}
+
 export default function* rootSaga() {
   yield all([
     watchAddPrice(),
+    loadSnapshots(),
   ])
 }

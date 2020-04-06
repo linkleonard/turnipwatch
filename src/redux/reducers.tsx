@@ -23,8 +23,16 @@ export function priceReducer(
           action.payload,
         ],
       };
-      default:
-        return state;
+    case ActionType.LOAD_PRICES:
+      return {
+        history: [
+          ...state.history,
+          ...action.payload.items,
+        ]
+      }
+    default:
+      return state;
+
   }
 };
 

@@ -3,6 +3,7 @@ import { PriceSnapshot } from '../types'
 export enum ActionType {
   ADD_PRICE = "AddPrice",
   SAVE_PRICE = "SavePrice",
+  LOAD_PRICES = "LoadPrices",
 };
 
 export interface AddPriceAction {
@@ -18,7 +19,14 @@ export interface SavePriceAction {
   },
 }
 
-export type PriceActionTypes = AddPriceAction
+export interface LoadPriceAction {
+  type: typeof ActionType.LOAD_PRICES,
+  payload: {
+    items: PriceSnapshot[],
+  },
+}
+
+export type PriceActionTypes = AddPriceAction | SavePriceAction | LoadPriceAction
 
 export const AddPrice = (price: Number, timestamp: Date): AddPriceAction => ({
   type: ActionType.ADD_PRICE,
@@ -31,4 +39,9 @@ export const SavePrice = (success: Boolean, payload?: PriceSnapshot): SavePriceA
     success,
     value: payload,
   }
+})
+
+export const LoadPrice = (items: PriceSnapshot[]): LoadPriceAction => ({
+  type: ActionType.LOAD_PRICES,
+  payload: { items },
 })
