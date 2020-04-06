@@ -1,4 +1,3 @@
-import moment from 'moment'
 import Chart, { Point } from 'chart.js'
 import React from 'react'
 

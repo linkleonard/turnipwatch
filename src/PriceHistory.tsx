@@ -12,16 +12,16 @@ function generateNullPrices(items: Date[]): PriceHistorySnapshot[] {
 
 function getSnapshotsForSlices(slices: Date[], snapshots: PriceSnapshot[]): PriceHistorySnapshot[] {
   // No more requested slices, we are done
-  if (slices.length == 0) {
+  if (slices.length === 0) {
     return [];
   }
   // No more pricing data available
-  if (snapshots.length == 0) {
+  if (snapshots.length === 0) {
     return generateNullPrices(slices)
   }
 
   const timestamp = slices[0]
-  const matchingCount = _.takeWhile(snapshots, i => i.timestamp.getTime() == timestamp.getTime()).length
+  const matchingCount = _.takeWhile(snapshots, i => i.timestamp.getTime() === timestamp.getTime()).length
 
   const price = (matchingCount > 0) ? 
     (snapshots[matchingCount - 1].price ?? null) :
