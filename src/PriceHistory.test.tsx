@@ -22,7 +22,6 @@ test('fromSnapshots with multiple matching snapshots', () => {
   expect(results.items).toEqual([snapshot])
 })
 
-
 test('fromSnapshots with sequence of snapshots', () => {
   const snapshots = [
     {
@@ -37,7 +36,6 @@ test('fromSnapshots with sequence of snapshots', () => {
   const results = fromSnapshots(snapshots, snapshots[0].timestamp, 2)
   expect(results.items).toEqual(snapshots)
 })
-
 
 test('fromSnapshots with multiple sequences of snapshots', () => {
   const snapshots = [
@@ -60,4 +58,21 @@ test('fromSnapshots with multiple sequences of snapshots', () => {
   ]
   const results = fromSnapshots(snapshots, snapshots[0].timestamp, 2)
   expect(results.items).toEqual([snapshots[1], snapshots[3]])
+})
+
+test('fromSnapshots with missing snapshots', () => {
+  const snapshots = [
+    {
+      timestamp: new Date("2020-01-01T12:00:00Z"),
+      price: 5,
+    },
+  ]
+  const results = fromSnapshots(snapshots, reference, 2)
+  expect(results.items).toEqual([
+    {
+      timestamp: reference,
+      price: null,
+    },
+    snapshots[0],
+  ])
 })

@@ -20,21 +20,20 @@ function getSnapshotsForSlices(slices: Date[], snapshots: PriceSnapshot[]): Pric
     return generateNullPrices(slices)
   }
 
-  // No more entries with a matching price
-  const current = slices[0]
-  const matchingIndex = snapshots.findIndex(s => s.timestamp.getTime() === current.getTime())
-  if (matchingIndex < 0) {
-    return generateNullPrices(slices)
-  }
+  const timestamp = slices[0]
+  const matchingIndex = snapshots.findIndex(s => s.timestamp.getTime() === timestamp.getTime())
 
   // Use the price from the latest matching snapshot
   const afterMatching = snapshots.slice(matchingIndex + 1)
-  const foundNextPriceIndex = afterMatching.findIndex(s => s.timestamp.getTime() !== current.getTime())
+  const foundNextPriceIndex = afterMatching.findIndex(s => s.timestamp.getTime() !== timestamp.getTime())
   const nextPriceIndex = (foundNextPriceIndex < 0) ? afterMatching.length : foundNextPriceIndex
-  const latestPriceIndex = Math.max(matchingIndex, nextPriceIndex)
+
+  // Only use nextPriceIndex for latestPrice if we found a match
+  const latestPriceIndex = (matchingIndex < 0) ? matchingIndex : Math.max(matchingIndex, nextPriceIndex)
+  const price = snapshots[latestPriceIndex]?.price ?? null
 
   const results = [
-    {timestamp: current, price: snapshots[latestPriceIndex].price},
+    {timestamp, price},
     ...getSnapshotsForSlices(slices.slice(1), snapshots.slice(latestPriceIndex + 1))
   ]
 
