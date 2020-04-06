@@ -1,4 +1,5 @@
 import React from 'react';
+import { RouteComponentProps } from '@reach/router'
 import { useDispatch } from 'react-redux';
 import { Form, Field } from 'react-final-form'
 
@@ -9,13 +10,13 @@ interface FormValues {
   price: number
 }
 
-function Component() {
+function Component(props: RouteComponentProps) {
   const dispatch = useDispatch()
   const onSubmit = (formValues: FormValues) => {
     dispatch(AddPrice(formValues.price, new Date()));
   }
   return (
-    <Form 
+    <Form
       onSubmit={onSubmit}
       render={({ handleSubmit }) => (
         <form onSubmit={handleSubmit}>

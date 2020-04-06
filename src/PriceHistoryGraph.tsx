@@ -1,5 +1,6 @@
 import moment from 'moment'
 import React from 'react'
+import { RouteComponentProps } from '@reach/router'
 import { Point } from 'chart.js'
 import { useSelector } from 'react-redux'
 
@@ -45,7 +46,7 @@ function toDataset(history: PriceHistory): Point[] {
   }))
 }
 
-function Component() {
+function Component(props: RouteComponentProps) {
   const historyResult = useSelector((state: RootState) => state.price.history)
   // TODO: read this from application state
   const weekStart = moment().startOf('week').toDate()
