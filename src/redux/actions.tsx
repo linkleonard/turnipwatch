@@ -28,9 +28,9 @@ export interface LoadPriceAction {
 
 export type PriceActionTypes = AddPriceAction | SavePriceAction | LoadPriceAction
 
-export const AddPrice = (price: Number, timestamp: Date): AddPriceAction => ({
+export const AddPrice = (price: number, timestamp: Date): AddPriceAction => ({
   type: ActionType.ADD_PRICE,
-  payload: { price, timestamp}
+  payload: { price, timestamp }
 });
 
 export const SavePrice = (success: Boolean, payload?: PriceSnapshot): SavePriceAction => ({

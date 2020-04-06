@@ -6,7 +6,7 @@ import { AddPrice } from './redux/actions';
 import NumberInput from './components/NumberInput';
 
 interface FormValues {
-  price: Number
+  price: number
 }
 
 function Component() {

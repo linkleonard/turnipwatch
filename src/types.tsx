@@ -2,12 +2,12 @@
  * The price in a particular snapshot in time.
  */
 export interface PriceSnapshot {
-  price: Number, 
+  price: number, 
   timestamp: Date,
 }
 
 export interface PriceHistorySnapshot {
-  price: Number | null,
+  price: number | null,
   timestamp: Date,
 }
 
