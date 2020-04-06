@@ -5,7 +5,7 @@ import { Link, Router, RouteComponentProps } from '@reach/router'
 import logo from './logo.png';
 import './App.css';
 import AddPrice from './AddPrice';
-import PriceHistoryGraph from './PriceHistoryGraph'
+import ViewPrice from './ViewPrice'
 
 const StyledHeader = styled.header`
 display: flex;
@@ -52,7 +52,7 @@ function App() {
       <Header />
       <Router>
         <AddPrice path="/price/add" />
-        <PriceHistoryGraph path="/price/me" />
+        <ViewPrice path="/price/me" />
         <Home path="/" />
       </Router>
     </div>
