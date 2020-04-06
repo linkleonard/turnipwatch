@@ -1,10 +1,7 @@
 import React from 'react';
-import { RouteComponentProps } from '@reach/router'
-import { useDispatch } from 'react-redux';
 import { Form, Field } from 'react-final-form'
 import styled from 'styled-components'
 
-import { AddPrice } from './redux/actions';
 import NumberInput from './components/NumberInput';
 
 const SubmitButton = styled.button`
@@ -22,31 +19,29 @@ grid-gap: 40px 20px;
 margin: 20px;
 `
 
-interface FormValues {
+export interface FormValues {
   price: number
 }
 
-function Component(props: RouteComponentProps) {
-  const dispatch = useDispatch()
-  const onSubmit = (formValues: FormValues) => {
-    dispatch(AddPrice(formValues.price, new Date()));
-  }
-  return (
-    <Form
-      onSubmit={onSubmit}
-      render={({ handleSubmit }) => (
-      <StyledForm onSubmit={handleSubmit}>
-          <label>Current Turnip Price</label>
-          <Field 
-            name="price" 
-            placeholder="Current Price" 
-            component={NumberInput(FormInput)}
-          />
-          <SubmitButton type="submit">Submit</SubmitButton>
-        </StyledForm>
-      )}
-    />
-  );
+interface Props {
+  onSubmit: (v: FormValues) => any
 }
+
+const Component = (props: Props) => (
+  <Form
+    onSubmit={props.onSubmit}
+    render={({ handleSubmit }) => (
+    <StyledForm onSubmit={handleSubmit}>
+        <label>Current Turnip Price</label>
+        <Field 
+          name="price" 
+          placeholder="Current Price" 
+          component={NumberInput(FormInput)}
+        />
+        <SubmitButton type="submit">Submit</SubmitButton>
+      </StyledForm>
+    )}
+  />
+);
 
 export default Component;

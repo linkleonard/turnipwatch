@@ -4,7 +4,7 @@ import { Link, Router, RouteComponentProps } from '@reach/router'
 
 import logo from './logo.png';
 import './App.css';
-import Form from './PriceForm';
+import AddPrice from './AddPrice';
 import PriceHistoryGraph from './PriceHistoryGraph'
 
 const StyledHeader = styled.header`
@@ -51,7 +51,7 @@ function App() {
     <div className="App">
       <Header />
       <Router>
-        <Form path="/price/add" />
+        <AddPrice path="/price/add" />
         <PriceHistoryGraph path="/price/me" />
         <Home path="/" />
       </Router>
