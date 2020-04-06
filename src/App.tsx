@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components'
 import { Link, Router, RouteComponentProps } from '@reach/router'
 
 import logo from './logo.png';
@@ -6,22 +7,38 @@ import './App.css';
 import Form from './PriceForm';
 import PriceHistoryGraph from './PriceHistoryGraph'
 
+const StyledHeader = styled.header`
+display: flex;
+align-items: center;
+`
+
+const StyledNav = styled.nav`
+display: flex;
+flex: 1 1 auto;
+justify-content: space-around;
+`
+
+const StyledImg = styled.img`
+object-fit: contain;
+max-height: 100px;
+`
+
 function Header() {
   return (
-    <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />      
+    <StyledHeader>
+      <StyledImg src={logo} alt="logo" />      
       <Nav />
-    </header>
+    </StyledHeader>
   )
 }
 
 function Nav() {
   return (
-    <nav>
+    <StyledNav>
       <Link to="/">Home</Link>
       <Link to="/price/add">Add Price</Link>
       <Link to="/price/me">My Prices</Link>
-    </nav>
+    </StyledNav>
   )
 }
 
