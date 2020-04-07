@@ -27,16 +27,18 @@ interface Props {
   onSubmit: (v: FormValues) => any
 }
 
+// NumberInput returns a new instance everytime, so keep the FC around so the reconciliator doesn't get confused
+const InputComponent = NumberInput(FormInput)
 const Component = (props: Props) => (
   <Form
     onSubmit={props.onSubmit}
     render={({ handleSubmit }) => (
-    <StyledForm onSubmit={handleSubmit}>
+      <StyledForm onSubmit={handleSubmit}>
         <label>Current Turnip Price</label>
         <Field 
           name="price" 
           placeholder="Current Price" 
-          component={NumberInput(FormInput)}
+          component={InputComponent}
         />
         <SubmitButton type="submit">Submit</SubmitButton>
       </StyledForm>
