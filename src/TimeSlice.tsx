@@ -19,3 +19,12 @@ export function getSliceStart(date: Date, reference: Date): Date {
   const sliceCount = Math.floor(delta.asHours() / 12)
   return moment(reference).add(sliceCount * 12, "hours").toDate()
 }
+
+
+export function isSameSlice(a: Date, b: Date, reference: Date): boolean {
+  return getSliceStart(a, reference).getTime() === getSliceStart(b, reference).getTime()
+}
+
+export function sliceName(a: Date): string {
+  return moment(a).format("dddd A")
+}
