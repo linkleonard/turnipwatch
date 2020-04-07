@@ -20,7 +20,7 @@ justify-content: space-around;
 
 const StyledImg = styled.img`
 object-fit: contain;
-max-height: 100px;
+max-width: 10vw;
 `
 
 function Header() {
