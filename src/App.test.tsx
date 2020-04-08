@@ -5,7 +5,7 @@ import { render, fireEvent } from '@testing-library/react';
 
 import { rootReducer } from "./redux/reducers";
 import App from './App';
-import { renderWithRouter } from './tests'
+import { renderWithRouter } from 'utils/tests'
 
 
 const store = createStore(rootReducer);
