@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux'
 
 import Graph, { Domain } from 'components/Graph'
 import { RootState } from 'redux/reducers'
-import { fromSnapshots } from './PriceHistory'
 import { PriceHistorySnapshot, PriceHistory } from 'models'
+import historyFromSnapshots from 'models/history'
 
 function toDomain(t: PriceHistorySnapshot, start: Date): number {
   const ms = t.timestamp.getTime() - start.getTime()
@@ -49,7 +49,7 @@ function Component() {
   const historyResult = useSelector((state: RootState) => state.price.history)
   // TODO: read this from application state
   const weekStart = moment().startOf('week').toDate()
-  const history: PriceHistory = fromSnapshots(historyResult, weekStart)
+  const history: PriceHistory = historyFromSnapshots(historyResult, weekStart)
 
   return (
     <div>

@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import { PriceSnapshot, PriceHistory, PriceHistorySnapshot } from 'models'
-import { getSliceDates, getSliceStart } from 'TimeSlice'
+import { getSliceDates, getSliceStart } from 'models/timeSlice'
 
 
 function generateNullPrices(items: Date[]): PriceHistorySnapshot[] {
@@ -35,7 +35,7 @@ function getSnapshotsForSlices(slices: Date[], snapshots: PriceSnapshot[]): Pric
   return results.flat(1)
 }
 
-export function fromSnapshots(items: PriceSnapshot[], start: Date, count = 14): PriceHistory {
+export default function parsePriceHistory(items: PriceSnapshot[], start: Date, count = 14): PriceHistory {
   const alignedItems = _.chain(items)
     .sortBy(i => i.timestamp)
     .map(i => ({

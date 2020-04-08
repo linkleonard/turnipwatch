@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import { AddPrice as AddPriceAction } from 'redux/actions';
 import { RootState } from 'redux/reducers'
 import PriceForm, { FormValues } from './PriceForm'
-import { isSameSlice, sliceName } from '../TimeSlice'
+import { isSameSlice, sliceName } from 'models/timeSlice'
 
 const Warning = styled.div`
 background-color: rgb(255, 255, 153);
