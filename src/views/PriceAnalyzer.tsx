@@ -2,10 +2,10 @@ import moment from 'moment'
 import React from 'react'
 import { useSelector } from 'react-redux'
 
-import { RootState } from './redux/reducers'
+import { RootState } from 'redux/reducers'
 import { fromSnapshots } from './PriceHistory'
 import { PriceHistory } from 'models'
-import { analyze } from './PriceBehavior/analyzer'
+import { analyze } from 'PriceAnalyzer/analyzer'
 
 function Component() {
   const historyResult = useSelector((state: RootState) => state.price.history)

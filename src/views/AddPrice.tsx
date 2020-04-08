@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment'
 import styled from 'styled-components'
 
-import { AddPrice as AddPriceAction } from './redux/actions';
-import { RootState } from './redux/reducers'
+import { AddPrice as AddPriceAction } from 'redux/actions';
+import { RootState } from 'redux/reducers'
 import PriceForm, { FormValues } from './PriceForm'
-import { isSameSlice, sliceName } from './TimeSlice'
+import { isSameSlice, sliceName } from '../TimeSlice'
 
 const Warning = styled.div`
 background-color: rgb(255, 255, 153);

@@ -3,8 +3,8 @@ import React from 'react'
 import { Point } from 'chart.js'
 import { useSelector } from 'react-redux'
 
-import Graph, { Domain } from './components/Graph'
-import { RootState } from './redux/reducers'
+import Graph, { Domain } from 'components/Graph'
+import { RootState } from 'redux/reducers'
 import { fromSnapshots } from './PriceHistory'
 import { PriceHistorySnapshot, PriceHistory } from 'models'
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Field } from 'react-final-form'
 import styled from 'styled-components'
 
-import NumberInput from './components/NumberInput';
+import NumberInput from 'components/NumberInput';
 
 const SubmitButton = styled.button`
 grid-column: 1 / -1;

@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import { PriceSnapshot, PriceHistory, PriceHistorySnapshot } from 'models'
-import { getSliceDates, getSliceStart } from './TimeSlice'
+import { getSliceDates, getSliceStart } from 'TimeSlice'
 
 
 function generateNullPrices(items: Date[]): PriceHistorySnapshot[] {

@@ -4,8 +4,8 @@ import { Link, Router, RouteComponentProps } from '@reach/router'
 
 import logo from './logo.png';
 import './App.css';
-import AddPrice from './AddPrice';
-import ViewPrice from './ViewPrice'
+import AddPrice from 'views/AddPrice';
+import ViewPrice from 'views/ViewPrice'
 
 const StyledHeader = styled.header`
 display: flex;
