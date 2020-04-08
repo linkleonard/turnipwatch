@@ -1,5 +1,5 @@
 import { put, takeEvery, all } from 'redux-saga/effects'
-import { PriceSnapshot } from "./types";
+import { PriceSnapshot } from "models";
 import { ActionType, AddPriceAction, SavePrice, LoadPrice } from './redux/actions';
 import LocalStorageApi from './PriceApi/localstorage';
 

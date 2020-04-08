@@ -1,5 +1,3 @@
-import { PriceHistorySnapshot } from '../types'
-
 export enum Pattern {
   Random = "random",
   Decreasing = "decreasing",
@@ -8,8 +6,6 @@ export enum Pattern {
   InsufficientData = "insufficientData",
   Unknown = "unknown",
 }
-
-export type BehaviorMatcher = (s: PriceHistorySnapshot[]) => boolean
 
 export interface Behavior {
   pattern: Pattern,

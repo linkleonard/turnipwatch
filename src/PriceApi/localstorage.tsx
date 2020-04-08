@@ -1,5 +1,5 @@
-import { PriceApi } from './types'
-import { PriceSnapshot } from '../types'
+import { IPriceApi } from './types'
+import { PriceSnapshot } from 'models'
 
 const storeKey = "snapshots"
 
@@ -19,7 +19,7 @@ function itemToModel(item: any): PriceSnapshot {
   }
 }
 
-export default function LocalStorageApi(backing = window.localStorage): PriceApi {
+export default function LocalStorageApi(backing = window.localStorage): IPriceApi {
   return {
     add(s: PriceSnapshot) {
       return this.list().then(items => {

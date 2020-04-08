@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 import Graph, { Domain } from './components/Graph'
 import { RootState } from './redux/reducers'
 import { fromSnapshots } from './PriceHistory'
-import { PriceHistorySnapshot, PriceHistory } from './types'
+import { PriceHistorySnapshot, PriceHistory } from 'models'
 
 function toDomain(t: PriceHistorySnapshot, start: Date): number {
   const ms = t.timestamp.getTime() - start.getTime()

@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 import { RootState } from './redux/reducers'
 import { fromSnapshots } from './PriceHistory'
-import { PriceHistory } from './types'
+import { PriceHistory } from 'models'
 import { analyze } from './PriceBehavior/analyzer'
 
 function Component() {

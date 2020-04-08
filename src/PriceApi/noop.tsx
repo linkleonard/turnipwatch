@@ -1,5 +1,5 @@
 import { PriceApi } from './types'
-import { PriceSnapshot } from '../types'
+import { PriceSnapshot } from 'models'
 
 export default function NoopApi(): PriceApi {
   return {

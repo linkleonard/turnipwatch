@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 
 import { ActionType, PriceActionTypes } from './actions';
-import { PriceSnapshot } from "../types";
+import { PriceSnapshot } from 'models'
 
 export interface PriceState {
   history: PriceSnapshot[],

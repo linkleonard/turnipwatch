@@ -1,6 +1,6 @@
-import { PriceSnapshot } from "../types";
+import { PriceSnapshot } from 'models'
 
-export interface PriceApi {
+export interface IPriceApi {
   add(s: PriceSnapshot): Promise<void>
   list(): Promise<PriceSnapshot[]>
 }

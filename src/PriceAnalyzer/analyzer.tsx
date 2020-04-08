@@ -1,5 +1,4 @@
-import { PriceHistorySnapshot } from '../types'
-import { Behavior, Pattern } from './types'
+import { Behavior, Pattern, PriceHistorySnapshot } from 'models'
 
 export function analyze(snapshots: PriceHistorySnapshot[]): Behavior {
   const withPrices = snapshots.filter(s => s.price !== null)
