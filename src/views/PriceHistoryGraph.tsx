@@ -7,21 +7,13 @@ import Graph, { Domain } from 'components/Graph'
 import { RootState } from 'redux/reducers'
 import { PriceHistorySnapshot, PriceHistory } from 'models'
 import historyFromSnapshots from 'models/history'
+import { daysOfWeek } from 'utils/time'
 
 function toDomain(t: PriceHistorySnapshot, start: Date): number {
   const ms = t.timestamp.getTime() - start.getTime()
   return ms / 60 / 60 / 1000 / 12
 }
 
-const daysOfWeek = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-]
 const labelLookup = new Map<Number, string>(daysOfWeek.map((v, k) => [k * 2, v]))
 
 function domainToLabel(x: number): string {
