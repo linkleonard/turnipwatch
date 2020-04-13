@@ -66,15 +66,30 @@ align-items: center;
 }
 `
 
-export interface FormValues {
-  price: number
+export interface FormResult {
+  prices: Record<number, number | undefined>,
 }
 
-function onSubmit() {}
+export interface FormValues {
+  [key: string]: string
+}
 
-// interface Props {
-//   onSubmit: (v: FormValues) => any
-// }
+function transformValues(values: FormValues): Record<number, number | undefined> {
+  const pricePrefix = "price-"
+  const { ...props } = values
+  return (
+    _.chain(props)
+      .pickBy((v, k) => k.startsWith(pricePrefix))
+      .mapKeys((v, k) => k.slice(pricePrefix.length))
+      .filter((v, k): v is string => v !== undefined)
+      .mapValues(v => parseInt(v, 10))
+      .value()
+  )
+}
+
+interface Props {
+  onSubmit: (v: FormResult) => any
+}
 
 function isNotDefined<T>(v: T | undefined): v is T {
   return v !== undefined
@@ -93,9 +108,11 @@ const times: string[] =
 
 // NumberInput returns a new instance everytime, so keep the FC around so the reconciliator doesn't get confused
 const InputComponent = NumberInput(FormInput)
-const Component = () => (
+const Component = (props: Props) => (
   <Form
-    onSubmit={onSubmit}
+    onSubmit={(v: FormValues) => props.onSubmit({
+      prices: transformValues(v)
+    })}
     render={({ handleSubmit }) => (
       <StyledForm onSubmit={handleSubmit}>
         {timeOfDay.map((time) => (
