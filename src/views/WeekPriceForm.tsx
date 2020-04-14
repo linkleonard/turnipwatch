@@ -67,14 +67,14 @@ align-items: center;
 `
 
 export interface FormResult {
-  prices: Record<number, number | undefined>,
+  prices: { [k: number]: number | null },
 }
 
 export interface FormValues {
   [key: string]: string
 }
 
-export function transformValues(values: FormValues): Record<number, number | undefined> {
+export function transformValues(values: FormValues): { [k: number]: number | null } {
   const pricePrefix = "price-"
   const { ...props } = values
   return (

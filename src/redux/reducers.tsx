@@ -22,11 +22,11 @@ interface WeekId {
   month: number,
 }
 export interface WeeklyState {
-  prices: Map<string, WeekPriceRecord>,
+  prices: { [k: string]: WeekPriceRecord },
 }
 
 const initialWeeklyState = {
-  prices: new Map<string, WeekPriceRecord>(),
+  prices: {},
 }
 
 export function priceReducer(
@@ -63,21 +63,17 @@ export function weeklyPriceReducer(
 ): WeeklyState {
   switch (action.type) {
     case WeeklyActionType.LOAD_WEEKLY_PRICES:
-      const prices = new Map<string, WeekPriceRecord>()
-      action.payload.forEach(r => {
-        prices.set(getKey(r), r)
-      })
       return {
         ...state,
-        prices,
+        prices: _.keyBy(action.payload, getKey),
       }
     case WeeklyActionType.SAVE_WEEKLY_PRICES:
-      const newPrices = new Map(state.prices)
-      const record = action.payload
-      newPrices.set(getKey(record), record)
       return {
         ...state,
-        prices: newPrices,
+        prices: {
+          ...state.prices,
+          [getKey(action.payload)]: action.payload
+        },
       }
       break;
     default:

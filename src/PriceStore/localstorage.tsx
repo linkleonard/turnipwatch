@@ -4,9 +4,9 @@ import { WeekPriceRecord } from 'models'
 const indexKey = "prices-index"
 
 function itemToModel(item: any): WeekPriceRecord {
-  const prices: (number | undefined)[] = item.prices.map((p: any) => {
-    if (p === undefined) {
-      return undefined
+  const prices: (number | null)[] = item.prices.map((p: any) => {
+    if (p === null) {
+      return null
     }
 
     const parsed = Number(p)
@@ -101,7 +101,7 @@ export default function LocalStorageApi(backing = window.localStorage): IPriceSt
         let index = readIndex()
         const deserialized =
           Array.from(index.values())
-            .map(backing.getItem)
+            .map(k => backing.getItem(k))
             .filter((v): v is string => v !== null)
             .map(stringToModel)
             .filter((v): v is WeekPriceRecord => v !== null)
