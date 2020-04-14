@@ -57,7 +57,7 @@ export default function LocalStorageApi(backing = window.localStorage): IPriceSt
     const indexRaw = backing.getItem(indexKey)
     let index: any | null
     try {
-      index = (indexRaw === null) ? {} : JSON.parse(indexRaw)
+      index = (indexRaw === null) ? [] : JSON.parse(indexRaw)
     } catch (e) {
       console.warn(`Index is not valid json: ${indexRaw}`)
       return new Set()
@@ -70,7 +70,7 @@ export default function LocalStorageApi(backing = window.localStorage): IPriceSt
     return new Set(index.map(i => i.toString()))
   }
   function writeIndex(keys: Set<string>) {
-    backing.setItem(indexKey, JSON.stringify(keys))
+    backing.setItem(indexKey, JSON.stringify(Array.from(keys)))
   }
   return {
     save(r: WeekPriceRecord) {
