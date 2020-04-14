@@ -8,11 +8,12 @@ import { PriceHistory } from 'models'
 import { analyze } from 'PriceAnalyzer/analyzer'
 
 function Component() {
-  const historyResult = useSelector((state: RootState) => state.price.history)
   // TODO: read this from application state
-  const weekStart = moment().startOf('week').toDate()
-  const history: PriceHistory = parsePriceHistory(historyResult, weekStart)
-  const behavior = analyze(history.items)
+  const now = moment()
+  const key = `${now.year()}-${now.weekYear()}`
+  const weekPrices = useSelector((state: RootState) => state.weeklyPrices.prices)[key]?.prices ?? []
+
+  const behavior = analyze(weekPrices)
 
   return <div>{behavior.recommendation}</div>
 }

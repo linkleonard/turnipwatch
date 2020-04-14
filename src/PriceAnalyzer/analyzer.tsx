@@ -1,14 +1,8 @@
-import { Behavior, Pattern, PriceHistorySnapshot } from 'models'
+import { Behavior, Pattern, MaybePrice } from 'models'
 import { decreasingMatcher } from './matchers'
-import { SSL_OP_NO_COMPRESSION } from 'constants'
 
-function notEmpty<T>(value: T | null | undefined): value is T {
-  return value !== null && value !== undefined
-}
-
-export function analyze(snapshots: PriceHistorySnapshot[]): Behavior {
-  const prices: number[] = snapshots.map(s => s.price).filter(notEmpty)
-  const isDecreasing = decreasingMatcher(prices)
+export function analyze(prices: MaybePrice[]): Behavior {
+  const isDecreasing = decreasingMatcher(prices.filter((p): p is number => p !== null))
 
   const pattern = isDecreasing ? Pattern.Decreasing : Pattern.Unknown
 
