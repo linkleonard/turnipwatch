@@ -1,10 +1,25 @@
-import { PriceSnapshot } from 'models'
+import { PriceSnapshot, WeekPriceRecord } from 'models'
 
 export enum ActionType {
   ADD_PRICE = "AddPrice",
   SAVE_PRICE = "SavePrice",
   LOAD_PRICES = "LoadPrices",
 };
+
+export enum WeeklyActionType {
+  SAVE_WEEKLY_PRICES = "SaveWeeklyPrices",
+  LOAD_WEEKLY_PRICES = "LoadWeeklyPrices",
+}
+
+export interface SaveWeeklyPrices {
+  type: typeof WeeklyActionType.SAVE_WEEKLY_PRICES,
+  payload: WeekPriceRecord,
+}
+
+export interface LoadWeeklyPrices {
+  type: typeof WeeklyActionType.LOAD_WEEKLY_PRICES,
+  payload: WeekPriceRecord[],
+}
 
 export interface AddPriceAction {
   type: typeof ActionType.ADD_PRICE,
@@ -26,6 +41,7 @@ export interface LoadPriceAction {
   },
 }
 
+export type WeeklyActionTypes = LoadWeeklyPrices | SaveWeeklyPrices
 export type PriceActionTypes = AddPriceAction | SavePriceAction | LoadPriceAction
 
 export const AddPrice = (price: number, timestamp: Date): AddPriceAction => ({
@@ -44,4 +60,15 @@ export const SavePrice = (success: Boolean, payload?: PriceSnapshot): SavePriceA
 export const LoadPrice = (items: PriceSnapshot[]): LoadPriceAction => ({
   type: ActionType.LOAD_PRICES,
   payload: { items },
+})
+
+
+export const SaveWeeklyPrices = (r: WeekPriceRecord): SaveWeeklyPrices => ({
+  type: WeeklyActionType.SAVE_WEEKLY_PRICES,
+  payload: r,
+})
+
+export const LoadWeeklyPrices = (records: WeekPriceRecord[]): LoadWeeklyPrices => ({
+  type: WeeklyActionType.LOAD_WEEKLY_PRICES,
+  payload: records,
 })
