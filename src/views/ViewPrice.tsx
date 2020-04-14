@@ -5,6 +5,7 @@ import { RouteComponentProps } from '@reach/router'
 import PriceHistoryGraph from './PriceHistoryGraph'
 import PriceAnalyzer from './PriceAnalyzer'
 import WeekPriceForm, { FormResult } from './WeekPriceForm'
+import WeekPriceHistoryGraph from './WeekPriceHistoryGraph'
 import { useDispatch, useSelector } from 'react-redux'
 import { SaveWeeklyPrices } from 'redux/actions'
 import moment from 'moment'
@@ -31,6 +32,7 @@ function Component(props: RouteComponentProps) {
   return (
     <div>
       <WeekPriceForm onSubmit={savePrices} prices={weekPrices} />
+      <WeekPriceHistoryGraph />
       <PriceHistoryGraph />
       <PriceAnalyzer />
     </div>
