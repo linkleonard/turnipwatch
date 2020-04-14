@@ -1,5 +1,14 @@
 import Chart, { Point } from 'chart.js'
 import React from 'react'
+import styled from 'styled-components'
+
+const Container = styled.div`
+display: relative;
+background: #F7F0DE;
+padding: 20px;
+margin: 40px;
+border-radius: 20px;
+`
 
 export interface Domain {
   min: number,
@@ -89,9 +98,9 @@ class Graph extends React.Component<Props, State> {
 
   render() {
     return (
-      <div>
+      <Container>
         <canvas ref={this.canvas} {...canvasProps} />
-      </div>
+      </Container>
     )
   }  
 }

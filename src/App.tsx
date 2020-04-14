@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components'
-import { Link, Router, RouteComponentProps } from '@reach/router'
+import { Link, Router, RouteComponentProps, LinkProps } from '@reach/router'
 
 import logo from './logo.png';
 import './App.css';
@@ -31,11 +31,21 @@ function Header() {
   )
 }
 
+const NavLink = (props: any) => (
+  <Link
+    {...props}
+    getProps={({ isCurrent }) => ({
+      className: isCurrent ? "active" : "",
+    })}
+  />
+  
+)
+
 function Nav() {
   return (
     <StyledNav>
-      <Link to="/">Home</Link>
-      <Link to="/price/me">My Prices</Link>
+      <NavLink to="/">Home</NavLink>
+      <NavLink to="/price/me">My Prices</NavLink>
     </StyledNav>
   )
 }

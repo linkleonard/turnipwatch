@@ -7,7 +7,9 @@ import NumberInput from 'components/NumberInput';
 import { daysOfWeek } from 'utils/time'
 
 const SubmitButton = styled.button`
-grid-column: 1 / -1;
+grid-area: s;
+align-self: center;
+justify-self: center;
 `
 
 enum TimeOfDay {
@@ -47,7 +49,7 @@ align-items: center;
     ". d0 d1 d2 d3 d4 d5 d6"
     "am d0a d1a d2a d3a d4a d5a d6a"
     "pm d0p d1p d2p d3p d4p d5p d6p"
-    "s  s   s   s   s   s   s   s"
+    ".  .   .   s   s   s   .   ."
 }
 
 @media only screen and (max-width: 799px) {

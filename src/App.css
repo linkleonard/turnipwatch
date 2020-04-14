@@ -11,3 +11,43 @@
   color: #61dafb;
 }
 
+body {
+  color: #6D624E;
+  background: #E5E0C2;
+}
+
+input[type=text], input[type=number] {
+  color: #786032;
+  background: #D5C68B;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+}
+
+button {
+  background: #F5F7E1;
+  color: #8D7C68;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  padding: 10px 20px;
+}
+
+a {
+  padding: 10px 15px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+a, a:visited {
+  color: #BCB5A3;
+  border: 2px solid #BCB5A3;
+  background: transparent;
+}
+
+a.active {
+  color: #FFF6C9;
+  background: #F49809;
+  border: none;
+}
