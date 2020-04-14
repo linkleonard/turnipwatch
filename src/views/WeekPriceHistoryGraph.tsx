@@ -7,11 +7,10 @@ import Graph, { } from 'components/Graph'
 import { RootState } from 'redux/reducers'
 import { daysOfWeek } from 'utils/time'
 
-
-const labelLookup = new Map<Number, string>(daysOfWeek.map((v, k) => [k * 2, v]))
-
 function domainToLabel(x: number): string {
-  return labelLookup.get(x) ?? ""
+  const day = daysOfWeek[(Math.floor(x / 2))]
+  const timeOfDay = x % 2 === 0 ? "AM" : "PM"
+  return `${day} ${timeOfDay}`
 }
 
 const domain = {

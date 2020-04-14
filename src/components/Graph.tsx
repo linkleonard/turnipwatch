@@ -41,18 +41,20 @@ class Graph extends React.Component<Props, State> {
     if (ctx === null) {
       return
     }
+    const labels = this.props.dataset.map(d => d.x)
+    const data = this.props.dataset
     this.chart = new Chart(ctx, {
-      type: 'line',
+      type: "bar",
       data: {
-          labels: this.props.dataset.map(d => d.x).map(this.props.convertLabel),
-          datasets: [{
-            label: this.props.label,
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
-            data: this.props.dataset,
-            spanGaps: true,
-            showLine: true,
-          }]
+          labels,
+          datasets: [
+            {
+              label: this.props.label,
+              backgroundColor: 'rgb(255, 99, 132)',
+              borderColor: 'rgb(255, 99, 132)',
+              data,
+            },
+          ]
       },
       options: {
         legend: {
@@ -60,11 +62,8 @@ class Graph extends React.Component<Props, State> {
         },
         scales: {
           xAxes: [{
-            type: "linear",
             ticks: {
-              min: this.props.domain.min,
-              max: this.props.domain.max,
-              callback: this.props.convertLabel,
+              callback: (value: number) => this.props.convertLabel(value),
             }
           }],
           yAxes: [{
@@ -72,6 +71,17 @@ class Graph extends React.Component<Props, State> {
               beginAtZero: true,
             }
           }]
+        },
+        tooltips: {
+          callbacks: {
+            title: item => {
+              const index = item[0]?.index
+              if (index === undefined) {
+                return ""
+              }
+              return this.props.convertLabel(index)
+            },
+          }
         }
       }
     })
