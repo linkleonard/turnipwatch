@@ -28,6 +28,8 @@ grid-area: ${props => `d${props.index}`};
 
 const FormInput = styled.input<{index: number}>`
 padding: 10px;
+width: calc(100% - 20px);
+text-align: center;
 grid-area: ${({index}) => {
   const day = Math.floor(index / 2)
   const timeOfDay = index % 2 === 0 ? "a" : "p"
@@ -39,10 +41,12 @@ const StyledForm = styled.form`
 display: grid;
 grid-gap: 10px;
 padding: 10px;
+margin: auto;
 justify-items: center;
 align-items: center;
 
 @media only screen and (min-width: 800px) {
+  max-width: 600px;
   grid-template-columns: 50px repeat(7, 1fr);
   grid-template-rows: repeat(4, 1fr);
   grid-template-areas:
@@ -53,6 +57,7 @@ align-items: center;
 }
 
 @media only screen and (max-width: 799px) {
+  max-width: 350px;
   grid-template-columns: 100px repeat(2, 1fr);
   grid-template-rows: auto;
   grid-template-areas:
@@ -64,7 +69,12 @@ align-items: center;
     "d4 d4a d4p"
     "d5 d5a d5p"
     "d6 d6a d6p"
-    "s  s   s"
+    "s  s   s";
+  
+  ${DayLabel} {
+    place-self: center end;
+    padding-right: 10px;
+  }
 }
 `
 
