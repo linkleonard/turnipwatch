@@ -88,7 +88,8 @@ export function transformValues(values: FormValues): { [k: number]: number | nul
 }
 
 interface Props {
-  onSubmit: (v: FormResult) => any
+  onSubmit: (v: FormResult) => any,
+  prices: (number | null)[],
 }
 
 function isNotDefined<T>(v: T | undefined): v is T {
@@ -126,6 +127,7 @@ const Component = (props: Props) => (
             name={`price-${index}`}
             component={InputComponent}
             key={index} index={index} aria-label={time}
+            initialValue={props.prices[index]}
           />
         ))}
         <SubmitButton type="submit">Submit</SubmitButton>
