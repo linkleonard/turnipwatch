@@ -4,7 +4,6 @@ import { Link, Router, RouteComponentProps } from '@reach/router'
 
 import logo from './logo.png';
 import './App.css';
-import AddPrice from 'views/AddPrice';
 import ViewPrice from 'views/ViewPrice'
 
 const StyledHeader = styled.header`
@@ -36,7 +35,6 @@ function Nav() {
   return (
     <StyledNav>
       <Link to="/">Home</Link>
-      <Link to="/price/add">Add Price</Link>
       <Link to="/price/me">My Prices</Link>
     </StyledNav>
   )
@@ -51,7 +49,6 @@ function App() {
     <div className="App">
       <Header />
       <Router>
-        <AddPrice path="/price/add" />
         <ViewPrice path="/price/me" />
         <Home path="/" />
       </Router>

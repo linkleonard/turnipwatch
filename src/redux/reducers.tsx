@@ -2,55 +2,17 @@ import { combineReducers } from "redux";
 import _ from 'lodash'
 
 import { 
-  ActionType,
-  PriceActionTypes,
   WeeklyActionTypes,
-  LoadWeeklyPrices,
   WeeklyActionType,
  } from './actions';
-import { PriceSnapshot, WeekPriceRecord } from 'models'
+import { WeekPriceRecord } from 'models'
 
-export interface PriceState {
-  history: PriceSnapshot[],
-}
-
-const initialState: PriceState = ({
-  history: [],
-});
-interface WeekId {
-  year: number,
-  month: number,
-}
 export interface WeeklyState {
   prices: { [k: string]: WeekPriceRecord },
 }
 
 const initialWeeklyState = {
   prices: {},
-}
-
-export function priceReducer(
-  state: PriceState = initialState,
-  action: PriceActionTypes,
-): PriceState {
-  switch (action.type) {
-    case ActionType.ADD_PRICE:
-      return {
-        history: [
-          ...state.history,
-          action.payload,
-        ],
-      };
-    case ActionType.LOAD_PRICES:
-      return {
-        history: [
-          ...state.history,
-          ...action.payload.items,
-        ]
-      }
-    default:
-      return state;
-  }
 }
 
 function getKey(r: WeekPriceRecord) {
@@ -75,14 +37,12 @@ export function weeklyPriceReducer(
           [getKey(action.payload)]: action.payload
         },
       }
-      break;
     default:
       return state;
   }
 }
 
 export const rootReducer = combineReducers({
-  price: priceReducer,
   weeklyPrices: weeklyPriceReducer,
 })
 

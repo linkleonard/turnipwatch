@@ -1,27 +1,8 @@
 import { put, takeEvery, all } from 'redux-saga/effects'
-import { PriceSnapshot } from "models";
-import { ActionType, AddPriceAction, SavePrice, LoadPrice, LoadWeeklyPrices, WeeklyActionType, SaveWeeklyPrices } from 'redux/actions';
-import LocalStorageApi from './PriceApi/localstorage';
+import { LoadWeeklyPrices, WeeklyActionType, SaveWeeklyPrices } from 'redux/actions';
 import LocalStorageWeeklyPrices from './PriceStore/localstorage';
 
-const priceApi = LocalStorageApi()
 const priceStore = LocalStorageWeeklyPrices()
-
-export function* saveSnapshot(s: PriceSnapshot) {
-  yield priceApi.add(s)
-  yield put(SavePrice(true, s))
-}
-
-export function* watchAddPrice() {
-  yield takeEvery(ActionType.ADD_PRICE, function*(action: AddPriceAction) {
-    yield saveSnapshot(action.payload)
-  })
-}
-
-export function* loadSnapshots() {
-  const items = yield priceApi.list()
-  yield put(LoadPrice(items))
-}
 
 export function* loadWeeklyPrices() {
   const items = yield priceStore.list()
@@ -36,8 +17,6 @@ export function* watchSaveWeeklyPrices() {
 
 export default function* rootSaga() {
   yield all([
-    watchAddPrice(),
-    loadSnapshots(),
     loadWeeklyPrices(),
     watchSaveWeeklyPrices(),
   ])

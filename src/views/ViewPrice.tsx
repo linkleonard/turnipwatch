@@ -2,7 +2,6 @@ import React from 'react'
 import _ from 'lodash'
 import { RouteComponentProps } from '@reach/router'
 
-import PriceHistoryGraph from './PriceHistoryGraph'
 import PriceAnalyzer from './PriceAnalyzer'
 import WeekPriceForm, { FormResult } from './WeekPriceForm'
 import WeekPriceHistoryGraph from './WeekPriceHistoryGraph'
@@ -33,7 +32,6 @@ function Component(props: RouteComponentProps) {
     <div>
       <WeekPriceForm onSubmit={savePrices} prices={weekPrices} />
       <WeekPriceHistoryGraph />
-      <PriceHistoryGraph />
       <PriceAnalyzer />
     </div>
   )
