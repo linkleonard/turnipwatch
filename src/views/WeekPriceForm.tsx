@@ -74,14 +74,14 @@ export interface FormValues {
   [key: string]: string
 }
 
-function transformValues(values: FormValues): Record<number, number | undefined> {
+export function transformValues(values: FormValues): Record<number, number | undefined> {
   const pricePrefix = "price-"
   const { ...props } = values
   return (
     _.chain(props)
       .pickBy((v, k) => k.startsWith(pricePrefix))
-      .mapKeys((v, k) => k.slice(pricePrefix.length))
-      .filter((v, k): v is string => v !== undefined)
+      .mapKeys((v, k) => parseInt(k.slice(pricePrefix.length), 10))
+      .pickBy((v): v is string => v !== undefined)
       .mapValues(v => parseInt(v, 10))
       .value()
   )
