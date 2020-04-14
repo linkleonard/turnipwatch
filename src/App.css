@@ -32,22 +32,3 @@ button {
   outline: none;
   padding: 10px 20px;
 }
-
-a {
-  padding: 10px 15px;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: 700;
-}
-
-a, a:visited {
-  color: #BCB5A3;
-  border: 2px solid #BCB5A3;
-  background: transparent;
-}
-
-a.active {
-  color: #FFF6C9;
-  background: #F49809;
-  border: none;
-}

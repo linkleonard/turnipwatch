@@ -1,5 +1,6 @@
 import React from 'react'
 import { RouteComponentProps } from '@reach/router'
+import styled from 'styled-components'
 
 import PriceAnalyzer from './PriceAnalyzer'
 import WeekPriceForm, { FormResult } from './WeekPriceForm'
@@ -8,6 +9,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { SaveWeeklyPrices } from 'redux/actions'
 import moment from 'moment'
 import { RootState } from 'redux/reducers'
+
+const Container = styled.section`
+padding: 20px 0 50px 0;
+`
 
 function Component(props: RouteComponentProps) {
   const dispatch = useDispatch()
@@ -28,11 +33,11 @@ function Component(props: RouteComponentProps) {
   }
 
   return (
-    <div>
+    <Container>
       <WeekPriceForm onSubmit={savePrices} prices={weekPrices} />
       <WeekPriceHistoryGraph />
       <PriceAnalyzer />
-    </div>
+    </Container>
   )
 }
 

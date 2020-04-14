@@ -9,12 +9,33 @@ import ViewPrice from 'views/ViewPrice'
 const StyledHeader = styled.header`
 display: flex;
 align-items: center;
+padding: 20px;
 `
 
 const StyledNav = styled.nav`
 display: flex;
 flex: 1 1 auto;
-justify-content: space-around;
+justify-content: center;
+
+a {
+  padding: 10px 15px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 700;
+  margin: 5px;
+}
+
+a, a:visited {
+  color: #BCB5A3;
+  border: 2px solid #BCB5A3;
+  background: transparent;
+}
+
+a.active {
+  color: #FFF6C9;
+  background: #F49809;
+  border: none;
+}
 `
 
 const StyledImg = styled.img`
