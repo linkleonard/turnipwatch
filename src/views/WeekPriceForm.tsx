@@ -28,7 +28,7 @@ const FormInput = styled.input<{index: number}>`
 padding: 10px;
 grid-area: ${({index}) => {
   const day = Math.floor(index / 2)
-  const timeOfDay = index % 2 == 0 ? "a" : "p"
+  const timeOfDay = index % 2 === 0 ? "a" : "p"
   return `d${day}${timeOfDay}`
 }};
 `

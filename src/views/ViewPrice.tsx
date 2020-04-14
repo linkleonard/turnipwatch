@@ -1,5 +1,4 @@
 import React from 'react'
-import _ from 'lodash'
 import { RouteComponentProps } from '@reach/router'
 
 import PriceAnalyzer from './PriceAnalyzer'
