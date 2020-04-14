@@ -17,3 +17,11 @@ export interface PriceHistorySnapshot {
 export interface PriceHistory {
   items: PriceHistorySnapshot[],
 }
+
+export type MaybePrice = number | undefined
+
+export interface WeekPriceRecord {
+  year: number,
+  week: number,
+  prices: MaybePrice[],
+}
