@@ -28,14 +28,19 @@ grid-area: ${props => `d${props.index}`};
 `
 
 const FormInput = styled.input<{ index: number }>`
-padding: 10px;
-width: calc(100% - 20px);
-text-align: center;
 grid-area: ${({ index }) => {
     const day = Math.floor(index / 2)
     const timeOfDay = index % 2 === 0 ? "a" : "p"
     return `d${day}${timeOfDay}`
   }};
+`
+
+const BuyPriceLabel = styled.label`
+grid-area: bl;
+`
+
+const BuyPriceInput = styled.input`
+grid-area: bp;
 `
 
 const StyledForm = styled.form`
@@ -46,15 +51,32 @@ margin: auto;
 justify-items: center;
 align-items: center;
 
+${FormInput}, ${BuyPriceInput} {
+  width: calc(100% - 20px);
+  padding: 10px;
+  text-align: center;
+}
+
+${BuyPriceLabel} {
+  text-align: center;
+}
+
 @media only screen and (min-width: 800px) {
   max-width: 600px;
   grid-template-columns: 50px repeat(6, 1fr);
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-rows: 1fr 50px repeat(4, 1fr);
   grid-template-areas:
+    ".  .   .   bl  bl  .   ."	
+    ".  .   .   bp  bp  .   ."	
     ".  d0  d1  d2  d3  d4  d5"
     "am d0a d1a d2a d3a d4a d5a"
     "pm d0p d1p d2p d3p d4p d5p"
-    ".  .   .   s   s   s   .";
+    ".  .   .   s   s   .   .";
+
+  ${BuyPriceInput} {
+    width: calc(60% - 20px);
+    align-self: start;
+  }
 }
 
 @media only screen and (max-width: 799px) {
@@ -62,6 +84,7 @@ align-items: center;
   grid-template-columns: 100px repeat(2, 1fr);
   grid-template-rows: auto;
   grid-template-areas:
+    "bl bp  bp"
     ".  am  pm"
     "d0 d0a d0p"
     "d1 d1a d1p"
@@ -71,7 +94,7 @@ align-items: center;
     "d5 d5a d5p"
     "s  s   s";
   
-  ${DayLabel} {
+  ${DayLabel}, ${BuyPriceLabel} {
     place-self: center end;
     padding-right: 10px;
   }
@@ -126,12 +149,19 @@ const times: string[] =
     .value()
 
 // NumberInput returns a new instance everytime, so keep the FC around so the reconciliator doesn't get confused
+const BuyPriceInputComponent = NumberInput(BuyPriceInput)
 const InputComponent = NumberInput(FormInput)
 const Component = (props: Props) => (
   <Form
     onSubmit={(v: FormValues) => props.onSubmit(transformValues(v))}
     render={({ handleSubmit }) => (
       <StyledForm onSubmit={handleSubmit}>
+        <BuyPriceLabel htmlFor="buyPrice">Buy Price</BuyPriceLabel>
+        <Field
+          name="buyPrice"
+          initialValue={props.priceRecord.buyPrice ?? undefined}
+          component={BuyPriceInputComponent}
+        />
         {timeOfDay.map((time) => (
           <TimeLabel key={time} time={time}>{time}</TimeLabel>
         ))}
@@ -142,7 +172,9 @@ const Component = (props: Props) => (
           <Field
             name={`price-${index}`}
             component={InputComponent}
-            key={index} index={index} aria-label={time}
+            key={index}
+            index={index}
+            aria-label={time}
             initialValue={props.priceRecord.prices[index]}
           />
         ))}
