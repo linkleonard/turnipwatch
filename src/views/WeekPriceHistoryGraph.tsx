@@ -5,10 +5,10 @@ import { useSelector } from 'react-redux'
 
 import Graph, { } from 'components/Graph'
 import { RootState } from 'redux/reducers'
-import { daysOfWeek } from 'utils/time'
+import { submittableDays } from 'utils/time'
 
 function domainToLabel(x: number): string {
-  const day = daysOfWeek[(Math.floor(x / 2))]
+  const day = submittableDays[(Math.floor(x / 2))]
   const timeOfDay = x % 2 === 0 ? "AM" : "PM"
   return `${day} ${timeOfDay}`
 }
