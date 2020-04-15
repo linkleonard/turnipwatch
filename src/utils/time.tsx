@@ -7,3 +7,5 @@ export const daysOfWeek = [
   "Friday",
   "Saturday",
 ]
+
+export const submittableDays = daysOfWeek.slice(1)

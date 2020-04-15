@@ -1,4 +1,4 @@
-import { WeekPriceRecord } from 'models'
+import { IWeekPriceRecord } from 'models'
 
 export enum WeeklyActionType {
   SAVE_WEEKLY_PRICES = "SaveWeeklyPrices",
@@ -7,22 +7,22 @@ export enum WeeklyActionType {
 
 export interface SaveWeeklyPrices {
   type: typeof WeeklyActionType.SAVE_WEEKLY_PRICES,
-  payload: WeekPriceRecord,
+  payload: IWeekPriceRecord,
 }
 
 export interface LoadWeeklyPrices {
   type: typeof WeeklyActionType.LOAD_WEEKLY_PRICES,
-  payload: WeekPriceRecord[],
+  payload: IWeekPriceRecord[],
 }
 
 export type WeeklyActionTypes = LoadWeeklyPrices | SaveWeeklyPrices
 
-export const SaveWeeklyPrices = (r: WeekPriceRecord): SaveWeeklyPrices => ({
+export const SaveWeeklyPrices = (r: IWeekPriceRecord): SaveWeeklyPrices => ({
   type: WeeklyActionType.SAVE_WEEKLY_PRICES,
   payload: r,
 })
 
-export const LoadWeeklyPrices = (records: WeekPriceRecord[]): LoadWeeklyPrices => ({
+export const LoadWeeklyPrices = (records: IWeekPriceRecord[]): LoadWeeklyPrices => ({
   type: WeeklyActionType.LOAD_WEEKLY_PRICES,
   payload: records,
 })

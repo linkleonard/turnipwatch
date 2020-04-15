@@ -1,7 +1,7 @@
-import { WeekPriceRecord } from 'models'
+import { IWeekPriceRecord } from 'models'
 
 export interface IPriceStore {
-  save(r: WeekPriceRecord): Promise<void>
-  get(year: number, month: number): Promise<WeekPriceRecord | undefined>
-  list(): Promise<WeekPriceRecord[]>
+  save(r: IWeekPriceRecord): Promise<void>
+  get(year: number, month: number): Promise<IWeekPriceRecord | undefined>
+  list(): Promise<IWeekPriceRecord[]>
 }

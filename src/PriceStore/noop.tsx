@@ -1,9 +1,9 @@
 import { IPriceStore } from './types'
-import { WeekPriceRecord } from 'models'
+import { IWeekPriceRecord } from 'models'
 
 export default function NoopApi(): IPriceStore {
   return {
-    save(r: WeekPriceRecord) {
+    save(r: IWeekPriceRecord) {
       return new Promise((res, rej) => res())
     },
     get() {

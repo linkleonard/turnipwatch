@@ -2,7 +2,7 @@ import LocalStorageApi from './localstorage'
 import MemoryStorage from "../utils/MemoryStorage"
 
 const indexKey = "prices-index"
-const storageKey = "prices-2020-01"
+const storageKey = "prices-2020-20"
 
 const spies = [
   jest.spyOn(window.console, "log"),
@@ -89,7 +89,7 @@ test("list fails when invalid json is stored", () => {
 
 test("list skips over invalid timestamps", () => {
   const storage = MemoryStorage()
-  const item = {price: 30, timestamp: null}
+  const item = { price: 30, timestamp: null }
   storage.setItem(storageKey, JSON.stringify([item]))
   const api = LocalStorageApi(storage)
 
@@ -100,11 +100,11 @@ test("list skips over invalid timestamps", () => {
 test("list skips over malformed items", () => {
   const storage = MemoryStorage()
   const altStorageKey = "price-unknown"
-  storage.setItem(storageKey, JSON.stringify(record))
+  storage.setItem(storageKey, JSON.stringify(weekRecord))
   storage.setItem(altStorageKey, "Herp derp")
   storage.setItem(indexKey, JSON.stringify([storageKey, altStorageKey]))
   const api = LocalStorageApi(storage)
 
   return expect(api.list())
-    .resolves.toEqual([record])
+    .resolves.toEqual([weekRecord])
 })

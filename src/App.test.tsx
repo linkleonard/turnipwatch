@@ -1,14 +1,14 @@
 import React from 'react'
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import { fireEvent } from '@testing-library/react';
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import { fireEvent } from '@testing-library/react'
 
-import { rootReducer } from "./redux/reducers";
-import App from './App';
+import { rootReducer } from "./redux/reducers"
+import App from './App'
 import { renderWithRouter } from 'utils/tests'
 
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer)
 
 test('submit prices', async () => {
   const rendered = renderWithRouter(
@@ -23,9 +23,9 @@ test('submit prices', async () => {
   } = rendered
 
   await navigate("/price/me")
-  fireEvent.change(getByLabelText("Sunday AM"), {target: {value: "35"}})
+  fireEvent.change(getByLabelText("Sunday AM"), { target: { value: "35" } })
   fireEvent.click(getByText("Submit"))
-});
+})
 
 test('View prices', async () => {
   const rendered = renderWithRouter(
@@ -38,4 +38,4 @@ test('View prices', async () => {
   } = rendered
 
   await navigate("/price/me")
-});
+})

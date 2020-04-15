@@ -1,10 +1,10 @@
-import React from 'react';
+import React from 'react'
 import _ from 'lodash'
 import { Form, Field } from 'react-final-form'
 import styled from 'styled-components'
 
-import NumberInput from 'components/NumberInput';
-import { MaybePrice, PriceRecord } from 'models'
+import NumberInput from 'components/NumberInput'
+import { MaybePrice, IPriceRecord } from 'models'
 import { daysOfWeek } from 'utils/time'
 
 const SubmitButton = styled.button`
@@ -18,24 +18,24 @@ enum TimeOfDay {
   pm = "pm",
 }
 
-const TimeLabel = styled.div<{time: TimeOfDay}>`
+const TimeLabel = styled.div<{ time: TimeOfDay }>`
 text-transform: uppercase;
 grid-area: ${props => `${props.time}`};
 `
 
-const DayLabel = styled.div<{index: number}>`
+const DayLabel = styled.div<{ index: number }>`
 grid-area: ${props => `d${props.index}`};
 `
 
-const FormInput = styled.input<{index: number}>`
+const FormInput = styled.input<{ index: number }>`
 padding: 10px;
 width: calc(100% - 20px);
 text-align: center;
-grid-area: ${({index}) => {
-  const day = Math.floor(index / 2)
-  const timeOfDay = index % 2 === 0 ? "a" : "p"
-  return `d${day}${timeOfDay}`
-}};
+grid-area: ${({ index }) => {
+    const day = Math.floor(index / 2)
+    const timeOfDay = index % 2 === 0 ? "a" : "p"
+    return `d${day}${timeOfDay}`
+  }};
 `
 
 const StyledForm = styled.form`
@@ -83,11 +83,11 @@ export interface FormValues {
   [key: string]: string
 }
 
-export function transformValues(values: FormValues): PriceRecord {
+export function transformValues(values: FormValues): IPriceRecord {
   const pricePrefix = "price-"
   const { ...props } = values
   const buyPrice = (values.buyPrice !== null) ? (parseInt(values.buyPrice, 10) ?? null) : null
-  const rawPrices = 
+  const rawPrices =
     _.chain(props)
       .pickBy((v, k) => k.startsWith(pricePrefix))
       .mapKeys((v, k) => parseInt(k.slice(pricePrefix.length), 10))
@@ -103,8 +103,8 @@ export function transformValues(values: FormValues): PriceRecord {
 }
 
 interface Props {
-  onSubmit: (v: PriceRecord) => any,
-  priceRecord: PriceRecord,
+  onSubmit: (v: IPriceRecord) => any,
+  priceRecord: IPriceRecord,
 }
 
 function isNotDefined<T>(v: T | undefined): v is T {
@@ -116,7 +116,7 @@ const timeOfDay = [TimeOfDay.am, TimeOfDay.pm]
 const submittableDays = daysOfWeek.slice(1)
 const am = submittableDays.map(d => `${d} AM`)
 const pm = submittableDays.map(d => `${d} PM`)
-const times: string[] = 
+const times: string[] =
   _.chain(am)
     .zip(pm)
     .flatten()
@@ -148,6 +148,6 @@ const Component = (props: Props) => (
       </StyledForm>
     )}
   />
-);
+)
 
-export default Component;
+export default Component

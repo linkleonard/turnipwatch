@@ -1,46 +1,11 @@
 import { IPriceStore } from './types'
-import { WeekPriceRecord } from 'models'
+import { IWeekPriceRecord, WeekPriceRecord } from 'models'
 import { isNumber } from 'lodash'
 
 const indexKey = "prices-index"
 
-function itemToModel(item: any): WeekPriceRecord {
-  const prices: (number | null)[] = (item.record?.prices ?? []).map((p: any) => {
-    if (p === null) {
-      return null
-    }
 
-    const parsed = Number(p)
-    if (Number.isNaN(parsed)) {
-      throw new TypeError(`Invalid price: ${p}`)
-    }
-    return parsed
-  })
-  const record = {
-    ...item.record,
-    buyPrice: Number(item.buyPrice),
-    prices,
-  }
-
-  const parsed = {
-    year: Number(item.year),
-    week: Number(item.week),
-    record,
-  }
-
-  if (Number.isNaN(record.buyPrice)) {
-    throw new TypeError("buyPrice is not a number")
-  }
-  if (Number.isNaN(parsed.year)) {
-    throw new TypeError("year is not a number")
-  }
-  if (Number.isNaN(parsed.week)) {
-    throw new TypeError("week is not a number")
-  }
-  return parsed
-}
-
-function stringToModel(raw: string): WeekPriceRecord | null {
+function stringToModel(raw: string): IWeekPriceRecord | null {
   let parsed: string | null = null
   try {
     parsed = JSON.parse(raw)
@@ -50,7 +15,7 @@ function stringToModel(raw: string): WeekPriceRecord | null {
   }
 
   try {
-    return itemToModel(parsed)
+    return WeekPriceRecord.sanitize(parsed)
   } catch (e) {
     console.warn(`Error deserializing stored price: ${parsed}`)
     return null
@@ -84,7 +49,7 @@ export default function LocalStorageApi(backing = window.localStorage): IPriceSt
     backing.setItem(indexKey, JSON.stringify(Array.from(keys)))
   }
   return {
-    save(r: WeekPriceRecord) {
+    save(r: IWeekPriceRecord) {
       return new Promise((res) => {
         const index = readIndex()
         const key = recordKey(r.year, r.week)
@@ -101,7 +66,7 @@ export default function LocalStorageApi(backing = window.localStorage): IPriceSt
         const key = recordKey(year, month)
         const raw = backing.getItem(key)
         if (raw === null) {
-          return undefined;
+          return undefined
         }
         const payload = JSON.parse(raw)
         res(payload)
@@ -115,7 +80,7 @@ export default function LocalStorageApi(backing = window.localStorage): IPriceSt
             .map(k => backing.getItem(k))
             .filter((v): v is string => v !== null)
             .map(stringToModel)
-            .filter((v): v is WeekPriceRecord => v !== null)
+            .filter((v): v is IWeekPriceRecord => v !== null)
         res(deserialized)
       })
     }

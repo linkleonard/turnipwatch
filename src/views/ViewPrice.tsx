@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { SaveWeeklyPrices } from 'redux/actions'
 import moment from 'moment'
 import { RootState } from 'redux/reducers'
-import { PriceRecord, EmptyPriceRecord } from 'models'
+import { IPriceRecord, EmptyPriceRecord } from 'models'
 
 const Container = styled.section`
 padding: 20px 0 50px 0;
@@ -22,7 +22,7 @@ function Component(props: RouteComponentProps) {
   const key = `${now.year()}-${now.weekYear()}`
   const priceRecord = useSelector((state: RootState) => state.weeklyPrices.prices)[key]?.record ?? EmptyPriceRecord
 
-  function savePrices(record: PriceRecord) {
+  function savePrices(record: IPriceRecord) {
     const now = moment()
 
     const weekRecord = {

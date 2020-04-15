@@ -1,21 +1,21 @@
-import { combineReducers } from "redux";
+import { combineReducers } from "redux"
 import _ from 'lodash'
 
-import { 
+import {
   WeeklyActionTypes,
   WeeklyActionType,
- } from './actions';
-import { WeekPriceRecord } from 'models'
+} from './actions'
+import { IWeekPriceRecord } from 'models'
 
 export interface WeeklyState {
-  prices: { [k: string]: WeekPriceRecord },
+  prices: { [k: string]: IWeekPriceRecord },
 }
 
 const initialWeeklyState = {
   prices: {},
 }
 
-function getKey(r: WeekPriceRecord) {
+function getKey(r: IWeekPriceRecord) {
   return `${r.year}-${r.week}`
 }
 
@@ -38,7 +38,7 @@ export function weeklyPriceReducer(
         },
       }
     default:
-      return state;
+      return state
   }
 }
 
