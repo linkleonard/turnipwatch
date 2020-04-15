@@ -4,6 +4,7 @@ import { Form, Field } from 'react-final-form'
 import styled from 'styled-components'
 
 import NumberInput from 'components/NumberInput';
+import { MaybePrice, PriceRecord } from 'models'
 import { daysOfWeek } from 'utils/time'
 
 const SubmitButton = styled.button`
@@ -47,13 +48,13 @@ align-items: center;
 
 @media only screen and (min-width: 800px) {
   max-width: 600px;
-  grid-template-columns: 50px repeat(7, 1fr);
+  grid-template-columns: 50px repeat(6, 1fr);
   grid-template-rows: repeat(4, 1fr);
   grid-template-areas:
-    ". d0 d1 d2 d3 d4 d5 d6"
-    "am d0a d1a d2a d3a d4a d5a d6a"
-    "pm d0p d1p d2p d3p d4p d5p d6p"
-    ".  .   .   s   s   s   .   ."
+    ".  d0  d1  d2  d3  d4  d5"
+    "am d0a d1a d2a d3a d4a d5a"
+    "pm d0p d1p d2p d3p d4p d5p"
+    ".  .   .   s   s   s   .";
 }
 
 @media only screen and (max-width: 799px) {
@@ -68,7 +69,6 @@ align-items: center;
     "d3 d3a d3p"
     "d4 d4a d4p"
     "d5 d5a d5p"
-    "d6 d6a d6p"
     "s  s   s";
   
   ${DayLabel} {
@@ -78,30 +78,33 @@ align-items: center;
 }
 `
 
-export interface FormResult {
-  prices: { [k: number]: number | null },
-}
-
 export interface FormValues {
+  buyPrice: string,
   [key: string]: string
 }
 
-export function transformValues(values: FormValues): { [k: number]: number | null } {
+export function transformValues(values: FormValues): PriceRecord {
   const pricePrefix = "price-"
   const { ...props } = values
-  return (
+  const buyPrice = (values.buyPrice !== null) ? (parseInt(values.buyPrice, 10) ?? null) : null
+  const rawPrices = 
     _.chain(props)
       .pickBy((v, k) => k.startsWith(pricePrefix))
       .mapKeys((v, k) => parseInt(k.slice(pricePrefix.length), 10))
       .pickBy((v): v is string => v !== undefined)
       .mapValues(v => parseInt(v, 10))
       .value()
-  )
+
+  const prices = Array.from(new Array(14)).map((v, k) => rawPrices[k])
+  return {
+    buyPrice,
+    prices,
+  }
 }
 
 interface Props {
-  onSubmit: (v: FormResult) => any,
-  prices: (number | null)[],
+  onSubmit: (v: PriceRecord) => any,
+  priceRecord: PriceRecord,
 }
 
 function isNotDefined<T>(v: T | undefined): v is T {
@@ -110,8 +113,9 @@ function isNotDefined<T>(v: T | undefined): v is T {
 
 const timeOfDay = [TimeOfDay.am, TimeOfDay.pm]
 
-const am = daysOfWeek.map(d => `${d} AM`)
-const pm = daysOfWeek.map(d => `${d} PM`)
+const submittableDays = daysOfWeek.slice(1)
+const am = submittableDays.map(d => `${d} AM`)
+const pm = submittableDays.map(d => `${d} PM`)
 const times: string[] = 
   _.chain(am)
     .zip(pm)
@@ -123,15 +127,13 @@ const times: string[] =
 const InputComponent = NumberInput(FormInput)
 const Component = (props: Props) => (
   <Form
-    onSubmit={(v: FormValues) => props.onSubmit({
-      prices: transformValues(v)
-    })}
+    onSubmit={(v: FormValues) => props.onSubmit(transformValues(v))}
     render={({ handleSubmit }) => (
       <StyledForm onSubmit={handleSubmit}>
         {timeOfDay.map((time) => (
           <TimeLabel key={time} time={time}>{time}</TimeLabel>
         ))}
-        {daysOfWeek.map((day, index) => (
+        {submittableDays.map((day, index) => (
           <DayLabel key={index} index={index}>{day.slice(0, 3)}</DayLabel>
         ))}
         {times.map((time, index) => (
@@ -139,7 +141,7 @@ const Component = (props: Props) => (
             name={`price-${index}`}
             component={InputComponent}
             key={index} index={index} aria-label={time}
-            initialValue={props.prices[index]}
+            initialValue={props.priceRecord.prices[index]}
           />
         ))}
         <SubmitButton type="submit">Submit</SubmitButton>

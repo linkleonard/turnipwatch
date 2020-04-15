@@ -12,23 +12,26 @@ const spies = [
 spies.forEach(spy => spy.mockImplementation())
 afterAll(() => spies.forEach(spy => spy.mockRestore()))
 
-const record = {
+const weekRecord = {
   year: 2020,
-  week: 1,
-  prices: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+  week: 20,
+  record: {
+    buyPrice: 10,
+    prices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+  }
 }
 
 test("record succeeds", () => {
   const storage = MemoryStorage()
   const api = LocalStorageApi(storage)
-  const saveRecord = api.save(record)
+  const saveRecord = api.save(weekRecord)
 
   const checkStorage = saveRecord.then(() => {
     const stored = storage.getItem(storageKey)
     if (stored === null) {
       throw new TypeError(`Found null in "${storageKey}"`)
     }
-    return expect(stored).toEqual(JSON.stringify(record))
+    return expect(stored).toEqual(JSON.stringify(weekRecord))
   })
   return Promise.all([
     expect(saveRecord).resolves.toBeUndefined,
@@ -38,17 +41,17 @@ test("record succeeds", () => {
 
 test("add with existing data succeeds", () => {
   const storage = MemoryStorage()
-  storage.setItem(storageKey, JSON.stringify(record))
+  storage.setItem(storageKey, JSON.stringify(weekRecord))
 
   const api = LocalStorageApi(storage)
-  const saveRecord = api.save(record)
+  const saveRecord = api.save(weekRecord)
 
   const checkStorage = saveRecord.then(() => {
     const stored = storage.getItem(storageKey)
     if (stored === null) {
       throw new TypeError(`Found null in "${storageKey}"`)
     }
-    return expect(stored).toEqual(JSON.stringify(record))
+    return expect(stored).toEqual(JSON.stringify(weekRecord))
   })
   return Promise.all([
     expect(saveRecord).resolves.toBeUndefined,
@@ -65,12 +68,12 @@ test("list succeeds for empty storage", () => {
 
 test("list succeeds with valid json", () => {
   const storage = MemoryStorage()
-  storage.setItem(storageKey, JSON.stringify(record))
+  storage.setItem(storageKey, JSON.stringify(weekRecord))
   storage.setItem(indexKey, JSON.stringify([storageKey]))
   const api = LocalStorageApi(storage)
   return expect(api.list())
     .resolves
-    .toContainEqual(record)
+    .toContainEqual(weekRecord)
 })
 
 test("list fails when invalid json is stored", () => {

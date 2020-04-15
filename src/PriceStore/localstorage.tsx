@@ -1,10 +1,11 @@
 import { IPriceStore } from './types'
 import { WeekPriceRecord } from 'models'
+import { isNumber } from 'lodash'
 
 const indexKey = "prices-index"
 
 function itemToModel(item: any): WeekPriceRecord {
-  const prices: (number | null)[] = item.prices.map((p: any) => {
+  const prices: (number | null)[] = (item.record?.prices ?? []).map((p: any) => {
     if (p === null) {
       return null
     }
@@ -15,15 +16,25 @@ function itemToModel(item: any): WeekPriceRecord {
     }
     return parsed
   })
+  const record = {
+    ...item.record,
+    buyPrice: Number(item.buyPrice),
+    prices,
+  }
+
   const parsed = {
     year: Number(item.year),
     week: Number(item.week),
-    prices,
+    record,
   }
-  if (Number.isNaN(Number(item.year))) {
+
+  if (Number.isNaN(record.buyPrice)) {
+    throw new TypeError("buyPrice is not a number")
+  }
+  if (Number.isNaN(parsed.year)) {
     throw new TypeError("year is not a number")
   }
-  if (Number.isNaN(Number(item.week))) {
+  if (Number.isNaN(parsed.week)) {
     throw new TypeError("week is not a number")
   }
   return parsed

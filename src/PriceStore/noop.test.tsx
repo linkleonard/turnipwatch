@@ -3,12 +3,15 @@ import NoopApi from './noop'
 const api = NoopApi()
 
 test("save succeeds", () => {
-  const record = {
+  const weekRecord = {
     year: 2020,
     week: 20,
-    prices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    record: {
+      buyPrice: 10,
+      prices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    }
   }
-  api.save(record).then(value => {
+  api.save(weekRecord).then(value => {
     expect(value).toBeUndefined()
   })
 })

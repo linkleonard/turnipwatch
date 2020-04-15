@@ -9,7 +9,7 @@ function Component() {
   // TODO: read this from application state
   const now = moment()
   const key = `${now.year()}-${now.weekYear()}`
-  const weekPrices = useSelector((state: RootState) => state.weeklyPrices.prices)[key]?.prices ?? []
+  const weekPrices = useSelector((state: RootState) => state.weeklyPrices.prices)[key]?.record.prices ?? []
 
   const behavior = analyze(weekPrices)
 

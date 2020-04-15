@@ -29,7 +29,7 @@ function Component() {
   const now = moment()
   // TODO: read this from application state
   const key = `${now.year()}-${now.weekYear()}`
-  const weekPrices = useSelector((state: RootState) => state.weeklyPrices.prices)[key]?.prices ?? []
+  const prices = useSelector((state: RootState) => state.weeklyPrices.prices)[key]?.record.prices ?? []
 
   return (
     <div>
@@ -37,7 +37,7 @@ function Component() {
         label="Price"
         domain={domain}
         convertLabel={domainToLabel}
-        dataset={toDataset(weekPrices)}
+        dataset={toDataset(prices)}
       />
     </div>
   )

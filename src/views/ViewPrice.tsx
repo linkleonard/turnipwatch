@@ -3,12 +3,13 @@ import { RouteComponentProps } from '@reach/router'
 import styled from 'styled-components'
 
 import PriceAnalyzer from './PriceAnalyzer'
-import WeekPriceForm, { FormResult } from './WeekPriceForm'
+import WeekPriceForm from './WeekPriceForm'
 import WeekPriceHistoryGraph from './WeekPriceHistoryGraph'
 import { useDispatch, useSelector } from 'react-redux'
 import { SaveWeeklyPrices } from 'redux/actions'
 import moment from 'moment'
 import { RootState } from 'redux/reducers'
+import { PriceRecord, EmptyPriceRecord } from 'models'
 
 const Container = styled.section`
 padding: 20px 0 50px 0;
@@ -19,22 +20,22 @@ function Component(props: RouteComponentProps) {
 
   const now = moment()
   const key = `${now.year()}-${now.weekYear()}`
-  const weekPrices = useSelector((state: RootState) => state.weeklyPrices.prices)[key]?.prices ?? []
+  const priceRecord = useSelector((state: RootState) => state.weeklyPrices.prices)[key]?.record ?? EmptyPriceRecord
 
-  function savePrices(result: FormResult) {
+  function savePrices(record: PriceRecord) {
     const now = moment()
-    const prices = Array.from(new Array(14)).map((v, k) => result.prices[k])
-    const record = {
+
+    const weekRecord = {
       year: now.year(),
       week: now.weekYear(),
-      prices,
+      record,
     }
-    dispatch(SaveWeeklyPrices(record))
+    dispatch(SaveWeeklyPrices(weekRecord))
   }
 
   return (
     <Container>
-      <WeekPriceForm onSubmit={savePrices} prices={weekPrices} />
+      <WeekPriceForm onSubmit={savePrices} priceRecord={priceRecord} />
       <WeekPriceHistoryGraph />
       <PriceAnalyzer />
     </Container>
