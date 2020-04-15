@@ -23,7 +23,7 @@ test('submit prices', async () => {
   } = rendered
 
   await navigate("/price/me")
-  fireEvent.change(getByLabelText("Sunday AM"), { target: { value: "35" } })
+  fireEvent.change(getByLabelText("Monday AM"), { target: { value: "35" } })
   fireEvent.click(getByText("Submit"))
 })
 
