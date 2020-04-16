@@ -1,13 +1,13 @@
 import React from 'react'
 import { RouteComponentProps } from '@reach/router'
 import styled from 'styled-components'
+import dayjs from 'dayjs'
 
 import PriceAnalyzer from './PriceAnalyzer'
 import WeekPriceForm from './WeekPriceForm'
 import WeekPriceHistoryGraph from './WeekPriceHistoryGraph'
 import { useDispatch, useSelector } from 'react-redux'
 import { SaveWeeklyPrices } from 'redux/actions'
-import moment from 'moment'
 import { RootState } from 'redux/reducers'
 import { IPriceRecord, EmptyPriceRecord } from 'models'
 
@@ -18,16 +18,16 @@ padding: 20px 0 50px 0;
 function Component(props: RouteComponentProps) {
   const dispatch = useDispatch()
 
-  const now = moment()
-  const key = `${now.year()}-${now.weekYear()}`
+  const now = dayjs()
+  const key = `${now.year()}-${now.week()}`
   const priceRecord = useSelector((state: RootState) => state.weeklyPrices.prices)[key]?.record ?? EmptyPriceRecord
 
   function savePrices(record: IPriceRecord) {
-    const now = moment()
+    const now = dayjs()
 
     const weekRecord = {
       year: now.year(),
-      week: now.weekYear(),
+      week: now.week(),
       record,
     }
     dispatch(SaveWeeklyPrices(weekRecord))

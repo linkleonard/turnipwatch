@@ -2,14 +2,10 @@ import React from 'react'
 import { RouteComponentProps } from '@reach/router'
 import styled from 'styled-components'
 
-import PriceAnalyzer from './PriceAnalyzer'
-import WeekPriceForm from './WeekPriceForm'
 import WeekPriceHistoryGraph from './WeekPriceHistoryGraph'
-import { useDispatch, useSelector } from 'react-redux'
-import { SaveWeeklyPrices } from 'redux/actions'
-import moment from 'moment'
+import { useSelector } from 'react-redux'
 import { RootState } from 'redux/reducers'
-import { IPriceRecord, EmptyPriceRecord } from 'models'
+import { EmptyPriceRecord } from 'models'
 
 const Container = styled.section`
 padding: 20px 0 50px 0;

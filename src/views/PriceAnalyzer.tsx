@@ -1,4 +1,4 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 import React from 'react'
 import { useSelector } from 'react-redux'
 
@@ -7,8 +7,8 @@ import { analyze } from 'PriceAnalyzer/analyzer'
 
 function Component() {
   // TODO: read this from application state
-  const now = moment()
-  const key = `${now.year()}-${now.weekYear()}`
+  const now = dayjs()
+  const key = `${now.year()}-${now.week()}`
   const weekPrices = useSelector((state: RootState) => state.weeklyPrices.prices)[key]?.record.prices ?? []
 
   const behavior = analyze(weekPrices)

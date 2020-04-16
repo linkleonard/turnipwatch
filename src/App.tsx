@@ -82,7 +82,7 @@ function App() {
       <Header />
       <Router>
         <EditPrice path="/price/me" />
-        <ViewPrice path="/price/me/:year/:month" />
+        <ViewPrice path="/price/me/:year/:week" />
         <Home path="/" />
       </Router>
     </div>
