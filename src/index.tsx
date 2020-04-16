@@ -6,6 +6,7 @@ import createSagaMiddleware from 'redux-saga'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import dayjs from 'dayjs'
 import isoWeek from 'dayjs/plugin/isoWeek'
+import relativeTime from 'dayjs/plugin/relativeTime'
 
 import App from './App'
 import * as serviceWorker from './serviceWorker'

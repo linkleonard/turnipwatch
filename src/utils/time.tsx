@@ -16,8 +16,17 @@ export const daysOfWeek = [
 
 export const submittableDays = daysOfWeek.slice(1)
 
+
+function toKey(year: number, week: number): string {
+  return `${year}-${week}`
+}
+
+export function keyFromYearWeek(yearWeek: YearWeek): string {
+  return toKey(yearWeek.year, yearWeek.week)
+}
+
 export function keyFromDayjs(time: Dayjs): string {
-  return `${time.isoWeekYear()}-${time.isoWeek()}`
+  return toKey(time.isoWeekYear(), time.isoWeek())
 }
 
 export function yearWeekFromDayjs(time: Dayjs): YearWeek {
