@@ -5,13 +5,10 @@ import dayjs, { Dayjs } from 'dayjs'
 import { Link } from '@reach/router'
 import { RootState } from 'redux/reducers'
 import { useSelector } from 'react-redux'
+import Dropdown from 'components/Dropdown'
 
 // Only show this number of dates on the navbar.
 const MAX_NAV_DATES = 6
-
-const NavFloatContainer = styled.div`
-position: relative;
-`
 
 const StyledNav = styled.nav`
 display: flex;
@@ -43,30 +40,6 @@ a.active {
 }
 `
 
-const FloatNav = styled.ul`
-position: absolute;
-z-index: 1;
-padding: 0;
-left: 0;
-top: 100%;
-right: auto;
-width: max-content;
-
-margin: 0;
-display: none;
-list-style: none;
-
-&.active {
-  display: grid;
-  grid-rows: auto;
-  grid-columns: 1fr;
-}
-
-a {
-  display: block;
-}
-`
-
 function formatWeekDiff(start: Dayjs, now: Dayjs): string {
   const weekDiff = Math.ceil(start.diff(now, 'week'))
 
@@ -82,7 +55,17 @@ function formatWeekDiff(start: Dayjs, now: Dayjs): string {
   return start.format("YYYY-MM-DD")
 }
 
-const PriceListNav = (props: React.HTMLAttributes<HTMLElement>) => {
+const NavLink = (props: any) => (
+  <Link
+    {...props}
+    getProps={({ isCurrent }) => ({
+      className: isCurrent ? "active" : "",
+    })}
+  />
+)
+
+
+export default function Nav() {
   const pricesByWeek = useSelector((state: RootState) => state.weeklyPrices.prices)
   const sorted =
     _.chain(pricesByWeek)
@@ -94,63 +77,26 @@ const PriceListNav = (props: React.HTMLAttributes<HTMLElement>) => {
       .value()
 
   const now = dayjs()
-  return (
-    <FloatNav {...props}>
-      {sorted.map(r => {
-        const start = dayjs().isoWeek(r.week).year(r.year)
 
-        return (
-          <li key={start.valueOf()}>
-            <NavLink to={`/price/me/${r.year}/${r.week}`}>
-              {formatWeekDiff(start, now)}
-            </NavLink>
-          </li>
-        )
-      })}
-    </FloatNav>
+  return (
+    <StyledNav>
+      <NavLink to="/">Home</NavLink>
+      <NavLink to="/price/me">My Prices</NavLink>
+      <Dropdown
+        button={props => <button {...props}>Past Prices</button>}
+      >
+        {sorted.map(r => {
+          const start = dayjs().isoWeek(r.week).year(r.year)
+
+          return (
+            <li key={start.valueOf()}>
+              <NavLink to={`/price/me/${r.year}/${r.week}`}>
+                {formatWeekDiff(start, now)}
+              </NavLink>
+            </li>
+          )
+        })}
+      </Dropdown>
+    </StyledNav>
   )
 }
-
-
-const NavLink = (props: any) => (
-  <Link
-    {...props}
-    getProps={({ isCurrent }) => ({
-      className: isCurrent ? "active" : "",
-    })}
-  />
-
-)
-
-class Nav extends React.Component {
-  state: {
-    active: boolean
-  }
-  constructor(props: any) {
-    super(props)
-    this.state = {
-      active: false
-    }
-  }
-
-  render() {
-    return (
-      <StyledNav>
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/price/me">My Prices</NavLink>
-        <NavFloatContainer>
-          <button
-            onClick={() => this.setState({ active: !this.state.active })}
-            aria-haspopup="true" aria-controls="price-list-nav" aria-expanded="true"
-          >
-            Past Prices
-            </button>
-          <PriceListNav id="price-list-nav" className={`${this.state.active ? "active" : ""}`} />
-        </NavFloatContainer>
-      </StyledNav>
-    )
-  }
-
-}
-
-export default Nav
