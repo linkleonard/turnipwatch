@@ -2,16 +2,18 @@ import _ from 'lodash'
 import { transformValues } from './WeekPriceForm'
 import { MaybePrice } from 'models'
 
+const priceInputs =
+  _.chain(new Array(12))
+    .map((v, k) => [k, v])
+    .keyBy(([k]) => `price-${k}`)
+    .mapValues(() => null)
+    .value()
+
 const emptyInput = {
   buyPrice: null,
-  prices:
-    _.chain(new Array(12))
-      .map((v, k) => [k, v])
-      .keyBy(([k]) => `price-${k}`)
-      .mapValues(() => null)
-      .value()
+  ...priceInputs,
 }
-const emptyPrices: MaybePrice[] = new Array(12).map(v => null)
+const emptyPrices: MaybePrice[] = Array.from(new Array(12)).map(v => null)
 
 test('transformValues parses prices', () => {
   const input = {

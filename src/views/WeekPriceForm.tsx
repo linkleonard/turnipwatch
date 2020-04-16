@@ -105,7 +105,8 @@ type UserInput = string | null
 
 export interface FormValues {
   buyPrice: UserInput,
-  prices: { [key: string]: UserInput }
+  // fields for each price entry, i.e. price-0
+  [key: string]: UserInput,
 }
 
 export function transformValues(values: FormValues): IPriceRecord {
@@ -117,7 +118,7 @@ export function transformValues(values: FormValues): IPriceRecord {
       .pickBy((v, k) => k.startsWith(pricePrefix))
       .mapKeys((v, k) => parseInt(k.slice(pricePrefix.length), 10))
       .pickBy((v): v is string => v !== undefined)
-      .mapValues(v => parseInt(v, 10))
+      .mapValues(v => (v !== null) ? parseInt(v, 10) : null)
       .value()
 
   const prices = Array.from(new Array(submittableDays.length * 2)).map((v, k) => rawPrices[k])
