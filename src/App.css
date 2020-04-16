@@ -16,7 +16,8 @@ body {
   background: #E5E0C2;
 }
 
-input[type=text], input[type=number] {
+input[type=text],
+input[type=number] {
   color: #786032;
   background: #D5C68B;
   border: none;

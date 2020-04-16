@@ -9,20 +9,28 @@ import { useSelector } from 'react-redux'
 // Only show this number of dates on the navbar.
 const MAX_NAV_DATES = 6
 
+const NavFloatContainer = styled.div`
+position: relative;
+`
+
 const StyledNav = styled.nav`
 display: flex;
 flex: 1 1 auto;
 justify-content: center;
 
-a {
+button, a {
+  font-family: Arial;
+  font-size: 15px;
+  display: inline-block;
   padding: 10px 15px;
   border-radius: 10px;
   text-decoration: none;
   font-weight: 700;
   margin: 5px;
+  border: 2px solid transparent;
 }
 
-a, a:visited {
+button, a, a:visited {
   color: #BCB5A3;
   border: 2px solid #BCB5A3;
   background: transparent;
@@ -31,9 +39,34 @@ a, a:visited {
 a.active {
   color: #FFF6C9;
   background: #F49809;
-  border: none;
+  border: 2px solid transparent;
 }
 `
+
+const FloatNav = styled.ul`
+position: absolute;
+z-index: 1;
+padding: 0;
+left: 0;
+top: 100%;
+right: auto;
+width: max-content;
+
+margin: 0;
+display: none;
+list-style: none;
+
+&.active {
+  display: grid;
+  grid-rows: auto;
+  grid-columns: 1fr;
+}
+
+a {
+  display: block;
+}
+`
+
 function formatWeekDiff(start: Dayjs, now: Dayjs): string {
   const weekDiff = Math.ceil(start.diff(now, 'week'))
 
@@ -49,7 +82,7 @@ function formatWeekDiff(start: Dayjs, now: Dayjs): string {
   return start.format("YYYY-MM-DD")
 }
 
-const PriceListNav = () => {
+const PriceListNav = (props: React.HTMLAttributes<HTMLElement>) => {
   const pricesByWeek = useSelector((state: RootState) => state.weeklyPrices.prices)
   const sorted =
     _.chain(pricesByWeek)
@@ -62,7 +95,7 @@ const PriceListNav = () => {
 
   const now = dayjs()
   return (
-    <ul>
+    <FloatNav {...props}>
       {sorted.map(r => {
         const start = dayjs().isoWeek(r.week).year(r.year)
 
@@ -74,7 +107,7 @@ const PriceListNav = () => {
           </li>
         )
       })}
-    </ul>
+    </FloatNav>
   )
 }
 
@@ -89,14 +122,35 @@ const NavLink = (props: any) => (
 
 )
 
-function Nav() {
-  return (
-    <StyledNav>
-      <NavLink to="/">Home</NavLink>
-      <NavLink to="/price/me">My Prices</NavLink>
-      <PriceListNav />
-    </StyledNav>
-  )
+class Nav extends React.Component {
+  state: {
+    active: boolean
+  }
+  constructor(props: any) {
+    super(props)
+    this.state = {
+      active: false
+    }
+  }
+
+  render() {
+    return (
+      <StyledNav>
+        <NavLink to="/">Home</NavLink>
+        <NavLink to="/price/me">My Prices</NavLink>
+        <NavFloatContainer>
+          <button
+            onClick={() => this.setState({ active: !this.state.active })}
+            aria-haspopup="true" aria-controls="price-list-nav" aria-expanded="true"
+          >
+            Past Prices
+            </button>
+          <PriceListNav id="price-list-nav" className={`${this.state.active ? "active" : ""}`} />
+        </NavFloatContainer>
+      </StyledNav>
+    )
+  }
+
 }
 
 export default Nav
