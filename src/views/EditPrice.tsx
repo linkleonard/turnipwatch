@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { SaveWeeklyPrices } from 'redux/actions'
 import { RootState } from 'redux/reducers'
 import { IPriceRecord, EmptyPriceRecord } from 'models'
+import { keyFromDayjs, yearWeekFromDayjs } from 'utils/time'
 
 const Container = styled.section`
 padding: 20px 0 50px 0;
@@ -18,16 +19,12 @@ padding: 20px 0 50px 0;
 function Component(props: RouteComponentProps) {
   const dispatch = useDispatch()
 
-  const now = dayjs()
-  const key = `${now.isoWeekYear()}-${now.isoWeek()}`
+  const key = keyFromDayjs(dayjs())
   const priceRecord = useSelector((state: RootState) => state.weeklyPrices.prices)[key]?.record ?? EmptyPriceRecord
 
   function savePrices(record: IPriceRecord) {
-    const now = dayjs()
-
     const weekRecord = {
-      year: now.isoWeekYear(),
-      week: now.isoWeek(),
+      ...yearWeekFromDayjs(dayjs()),
       record,
     }
     dispatch(SaveWeeklyPrices(weekRecord))
