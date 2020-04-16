@@ -12,7 +12,7 @@ grid-area: s;
 
 align-self: end;
 justify-self: end;
-transform: translate(35px, 10px);
+transform: translate(25px, 10px);
 
 `
 
@@ -84,26 +84,34 @@ ${BuyPriceLabel} {
 
 @media only screen and (max-width: 799px) {
   max-width: 350px;
-  grid-template-columns: 24% repeat(2, 1fr);
-  padding-right: 60px;
-  padding-left: 20px;
+  grid-template-columns: 24% repeat(4, 1fr);
+  padding-left: 10px;
+  padding-right: 40px;
 
   grid-template-rows: auto;
   grid-template-areas:
-    "bl bp  bp"
-    ".  am  pm"
-    "d0 d0a d0p"
-    "d1 d1a d1p"
-    "d2 d2a d2p"
-    "d3 d3a d3p"
-    "d4 d4a d4p"
-    "d5 d5a d5p"
-    ".  .   s";
+    "bl bl bp  bp bp"
+    ".  am am  pm pm"
+    "d0 d0a d0a d0p d0p"
+    "d1 d1a d1a d1p d1p"
+    "d2 d2a d2a d2p d2p"
+    "d3 d3a d3a d3p d3p"
+    "d4 d4a d4a d4p d4p"
+    "d5 d5a d5a d5p d5p"
+    ".  .   s   s   s";
   
   ${DayLabel}, ${BuyPriceLabel} {
     text-align: right;
     place-self: center end;
     padding-right: 10px;
+  }
+
+  ${BuyPriceLabel} {
+    place-self: center;
+  }
+
+  ${BuyPriceLabel}, ${BuyPriceInput} {
+    margin-bottom: 20px;
   }
 }
 `
