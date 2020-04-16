@@ -9,8 +9,11 @@ import { daysOfWeek } from 'utils/time'
 
 const SubmitButton = styled.button`
 grid-area: s;
-align-self: center;
-justify-self: center;
+
+align-self: end;
+justify-self: end;
+transform: translate(35px, 10px);
+
 `
 
 enum TimeOfDay {
@@ -71,7 +74,7 @@ ${BuyPriceLabel} {
     ".  d0  d1  d2  d3  d4  d5"
     "am d0a d1a d2a d3a d4a d5a"
     "pm d0p d1p d2p d3p d4p d5p"
-    ".  .   .   s   s   .   .";
+    ".  .   .   .   .   .   s";
 
   ${BuyPriceInput} {
     width: calc(60% - 20px);
@@ -81,7 +84,10 @@ ${BuyPriceLabel} {
 
 @media only screen and (max-width: 799px) {
   max-width: 350px;
-  grid-template-columns: 100px repeat(2, 1fr);
+  grid-template-columns: 24% repeat(2, 1fr);
+  padding-right: 60px;
+  padding-left: 20px;
+
   grid-template-rows: auto;
   grid-template-areas:
     "bl bp  bp"
@@ -92,9 +98,10 @@ ${BuyPriceLabel} {
     "d3 d3a d3p"
     "d4 d4a d4p"
     "d5 d5a d5p"
-    "s  s   s";
+    ".  .   s";
   
   ${DayLabel}, ${BuyPriceLabel} {
+    text-align: right;
     place-self: center end;
     padding-right: 10px;
   }
