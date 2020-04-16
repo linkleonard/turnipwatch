@@ -1,10 +1,10 @@
-import React from 'react';
+import React from 'react'
 import styled from 'styled-components'
 import { Link, Router, RouteComponentProps, LinkProps } from '@reach/router'
 
-import logo from './logo.png';
-import './App.css';
-import ViewPrice from 'views/ViewPrice'
+import logo from './logo.png'
+import './App.css'
+import EditPrice from 'views/EditPrice'
 
 const StyledHeader = styled.header`
 display: flex;
@@ -46,7 +46,7 @@ max-width: 10vw;
 function Header() {
   return (
     <StyledHeader>
-      <StyledImg src={logo} alt="logo" />      
+      <StyledImg src={logo} alt="logo" />
       <Nav />
     </StyledHeader>
   )
@@ -59,7 +59,7 @@ const NavLink = (props: any) => (
       className: isCurrent ? "active" : "",
     })}
   />
-  
+
 )
 
 function Nav() {
@@ -80,11 +80,11 @@ function App() {
     <div className="App">
       <Header />
       <Router>
-        <ViewPrice path="/price/me" />
+        <EditPrice path="/price/me" />
         <Home path="/" />
       </Router>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
