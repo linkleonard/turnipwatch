@@ -10,6 +10,8 @@ import Dropdown from 'components/Dropdown'
 // Only show this number of dates on the navbar.
 const MAX_NAV_DATES = 6
 
+const NavButton = styled.button``
+
 const StyledNav = styled.nav`
 display: flex;
 flex: 1 1 auto;
@@ -18,7 +20,7 @@ justify-content: center;
 button, a {
   font-family: Arial;
   font-size: 15px;
-  display: inline-block;
+  display: block;
   padding: 10px 15px;
   border-radius: 10px;
   text-decoration: none;
@@ -31,6 +33,13 @@ button, a, a:visited {
   color: #BCB5A3;
   border: 2px solid #BCB5A3;
   background: transparent;
+}
+
+
+${NavButton}:hover, a:hover {
+  background: #ffbc55;
+  border: 2px solid #fff6c9;
+  color: #614f2d;
 }
 
 a.active {
@@ -83,7 +92,7 @@ export default function Nav() {
       <NavLink to="/">Home</NavLink>
       <NavLink to="/price/me">My Prices</NavLink>
       <Dropdown
-        button={props => <button {...props}>Past Prices</button>}
+        button={props => <NavButton {...props}>Past Prices</NavButton>}
       >
         {sorted.map(r => {
           const start = dayjs().isoWeek(r.week).year(r.year)
