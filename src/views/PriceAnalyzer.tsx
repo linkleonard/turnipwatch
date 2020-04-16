@@ -8,7 +8,7 @@ import { analyze } from 'PriceAnalyzer/analyzer'
 function Component() {
   // TODO: read this from application state
   const now = dayjs()
-  const key = `${now.year()}-${now.week()}`
+  const key = `${now.isoWeekYear()}-${now.isoWeek()}`
   const weekPrices = useSelector((state: RootState) => state.weeklyPrices.prices)[key]?.record.prices ?? []
 
   const behavior = analyze(weekPrices)

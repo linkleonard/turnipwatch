@@ -6,11 +6,27 @@ import { fireEvent } from '@testing-library/react'
 import { rootReducer } from "./redux/reducers"
 import App from './App'
 import { renderWithRouter } from 'utils/tests'
+import { create } from 'lodash'
+import { LoadWeeklyPrices } from 'redux/actions'
+import { WeekPriceRecord } from 'models'
 
 
 const store = createStore(rootReducer)
 
-test('submit prices', async () => {
+test('View current price with no history', async () => {
+  const rendered = renderWithRouter(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  )
+  const {
+    history: { navigate },
+  } = rendered
+
+  await navigate("/price/me")
+})
+
+test('View current price then edit', async () => {
   const rendered = renderWithRouter(
     <Provider store={store}>
       <App />
@@ -27,7 +43,18 @@ test('submit prices', async () => {
   fireEvent.click(getByText("Submit"))
 })
 
-test('View prices', async () => {
+test('View historic prices', async () => {
+  const weekPriceRecord = new WeekPriceRecord({
+    year: 2020,
+    week: 15,
+    record: {
+      buyPrice: 10,
+      prices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    }
+  })
+  const store = createStore(rootReducer)
+  store.dispatch(LoadWeeklyPrices([weekPriceRecord]))
+
   const rendered = renderWithRouter(
     <Provider store={store}>
       <App />
@@ -37,5 +64,5 @@ test('View prices', async () => {
     history: { navigate },
   } = rendered
 
-  await navigate("/price/me")
+  await navigate("/price/me/2020/15")
 })

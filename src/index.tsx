@@ -5,7 +5,7 @@ import { createStore, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import dayjs from 'dayjs'
-import weekOfYear from 'dayjs/plugin/weekOfYear'
+import isoWeek from 'dayjs/plugin/isoWeek'
 
 import App from './App'
 import * as serviceWorker from './serviceWorker'
@@ -14,7 +14,7 @@ import { rootReducer } from "./redux/reducers"
 import './index.css'
 import rootSaga from './sagas'
 
-dayjs.extend(weekOfYear)
+dayjs.extend(isoWeek)
 
 const composeEnhancers = composeWithDevTools({})
 const sagaMiddleware = createSagaMiddleware()

@@ -19,15 +19,15 @@ function Component(props: RouteComponentProps) {
   const dispatch = useDispatch()
 
   const now = dayjs()
-  const key = `${now.year()}-${now.week()}`
+  const key = `${now.isoWeekYear()}-${now.isoWeek()}`
   const priceRecord = useSelector((state: RootState) => state.weeklyPrices.prices)[key]?.record ?? EmptyPriceRecord
 
   function savePrices(record: IPriceRecord) {
     const now = dayjs()
 
     const weekRecord = {
-      year: now.year(),
-      week: now.week(),
+      year: now.isoWeekYear(),
+      week: now.isoWeek(),
       record,
     }
     dispatch(SaveWeeklyPrices(weekRecord))
