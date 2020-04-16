@@ -15,29 +15,19 @@ const Container = styled.section`
 padding: 20px 0 50px 0;
 `
 
-function Component(props: RouteComponentProps) {
-  const dispatch = useDispatch()
+interface RouteProps extends RouteComponentProps {
+  year?: number,
+  week?: number,
+}
 
-  const now = moment()
-  const key = `${now.year()}-${now.weekYear()}`
+function Component(props: RouteProps) {
+  const { year, week } = props
+  const key = `${year}-${week}`
   const priceRecord = useSelector((state: RootState) => state.weeklyPrices.prices)[key]?.record ?? EmptyPriceRecord
-
-  function savePrices(record: IPriceRecord) {
-    const now = moment()
-
-    const weekRecord = {
-      year: now.year(),
-      week: now.weekYear(),
-      record,
-    }
-    dispatch(SaveWeeklyPrices(weekRecord))
-  }
 
   return (
     <Container>
-      <WeekPriceForm onSubmit={savePrices} priceRecord={priceRecord} />
       <WeekPriceHistoryGraph priceRecord={priceRecord} />
-      <PriceAnalyzer />
     </Container>
   )
 }

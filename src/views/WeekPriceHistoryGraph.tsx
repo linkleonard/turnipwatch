@@ -1,11 +1,9 @@
-import moment from 'moment'
 import React from 'react'
 import { Point } from 'chart.js'
-import { useSelector } from 'react-redux'
 
 import Graph, { } from 'components/Graph'
-import { RootState } from 'redux/reducers'
 import { submittableDays } from 'utils/time'
+import { IPriceRecord } from 'models'
 
 function domainToLabel(x: number): string {
   const day = submittableDays[(Math.floor(x / 2))]
@@ -25,19 +23,18 @@ function toDataset(prices: (number | null)[]): Point[] {
   })).filter((v): v is Point => v !== null)
 }
 
-function Component() {
-  const now = moment()
-  // TODO: read this from application state
-  const key = `${now.year()}-${now.weekYear()}`
-  const prices = useSelector((state: RootState) => state.weeklyPrices.prices)[key]?.record.prices ?? []
+interface WeekPriceHistoryGraphProps {
+  priceRecord: IPriceRecord
+}
 
+function Component(props: WeekPriceHistoryGraphProps) {
   return (
     <div>
       <Graph
         label="Price"
         domain={domain}
         convertLabel={domainToLabel}
-        dataset={toDataset(prices)}
+        dataset={toDataset(props.priceRecord.prices)}
       />
     </div>
   )
