@@ -32,6 +32,8 @@
     "typescript": "^3.7.5"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom-fourteen",
@@ -56,6 +58,7 @@
     "testEnvironment": "jest-environment-jsdom-fourteen"
   },
   "devDependencies": {
-    "canvas": "^2.6.1"
+    "canvas": "^2.6.1",
+    "gh-pages": "^2.2.0"
   }
 }
