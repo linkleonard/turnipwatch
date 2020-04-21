@@ -4,7 +4,7 @@ import { Form, Field } from 'react-final-form'
 import styled from 'styled-components'
 
 import NumberInput from 'components/NumberInput'
-import { MaybePrice, IPriceRecord } from 'models'
+import { IPriceRecord } from 'models'
 import { daysOfWeek } from 'utils/time'
 
 const SubmitButton = styled.button`

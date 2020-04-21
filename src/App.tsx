@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import styled from 'styled-components'
 import { Router, RouteComponentProps } from '@reach/router'
 
@@ -33,16 +33,28 @@ function Home(props: RouteComponentProps) {
   return <div />
 }
 
-function App() {
+interface InAppProps extends RouteComponentProps {
+  children: ReactNode
+}
+
+function InApp(props: InAppProps) {
   return (
     <div className="App">
       <Header />
-      <Router>
-        <EditPrice path="/price/me" />
-        <ViewPrice path="/price/me/:year/:week" />
-        <Home path="/" />
-      </Router>
+      {props.children}
     </div>
+  )
+}
+
+function App() {
+  return (
+    <Router>
+      <InApp path="/">
+        <EditPrice path="price/me" />
+        <ViewPrice path="price/me/:year/:week" />
+        <Home path="/" />
+      </InApp>
+    </Router>
   )
 }
 

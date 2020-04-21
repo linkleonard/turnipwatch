@@ -52,10 +52,10 @@ a.active {
 function formatWeekDiff(start: Dayjs, now: Dayjs): string {
   const weekDiff = Math.ceil(start.diff(now, 'week'))
 
-  if (weekDiff == 0) {
+  if (weekDiff === 0) {
     return 'This week'
   }
-  if (weekDiff == 1) {
+  if (weekDiff === 1) {
     return 'Last week'
   }
   if (weekDiff < 5) {
@@ -89,8 +89,8 @@ export default function Nav() {
 
   return (
     <StyledNav>
-      <NavLink to="/">Home</NavLink>
-      <NavLink to="/price/me">My Prices</NavLink>
+      <NavLink to="">Home</NavLink>
+      <NavLink to="price/me">My Prices</NavLink>
       <Dropdown
         button={props => <NavButton {...props}>Past Prices</NavButton>}
       >
@@ -99,7 +99,7 @@ export default function Nav() {
 
           return (
             <li key={start.valueOf()}>
-              <NavLink to={`/price/me/${r.year}/${r.week}`}>
+              <NavLink to={`price/me/${r.year}/${r.week}`}>
                 {formatWeekDiff(start, now)}
               </NavLink>
             </li>

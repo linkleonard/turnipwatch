@@ -1,6 +1,5 @@
 import { IPriceStore } from './types'
 import { IWeekPriceRecord, WeekPriceRecord } from 'models'
-import { isNumber } from 'lodash'
 
 const indexKey = "prices-index"
 
