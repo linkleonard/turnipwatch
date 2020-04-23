@@ -3,7 +3,6 @@ import { RouteComponentProps } from 'react-router-dom'
 import styled from 'styled-components'
 import dayjs from 'dayjs'
 
-import PriceAnalyzer from './PriceAnalyzer'
 import WeekPriceForm from './WeekPriceForm'
 import WeekPriceHistoryGraph from './WeekPriceHistoryGraph'
 import { useDispatch, useSelector } from 'react-redux'
@@ -34,7 +33,6 @@ function Component(props: RouteComponentProps) {
     <Container>
       <WeekPriceForm onSubmit={savePrices} priceRecord={priceRecord} />
       <WeekPriceHistoryGraph priceRecord={priceRecord} />
-      <PriceAnalyzer />
     </Container>
   )
 }
