@@ -2,7 +2,7 @@ import _ from 'lodash'
 import styled from 'styled-components'
 import React from 'react'
 import dayjs, { Dayjs } from 'dayjs'
-import { Link } from '@reach/router'
+import { NavLink } from 'react-router-dom'
 import { RootState } from 'redux/reducers'
 import { useSelector } from 'react-redux'
 import Dropdown from 'components/Dropdown'
@@ -64,16 +64,6 @@ function formatWeekDiff(start: Dayjs, now: Dayjs): string {
   return start.format("YYYY-MM-DD")
 }
 
-const NavLink = (props: any) => (
-  <Link
-    {...props}
-    getProps={({ isCurrent }) => ({
-      className: isCurrent ? "active" : "",
-    })}
-  />
-)
-
-
 export default function Nav() {
   const pricesByWeek = useSelector((state: RootState) => state.weeklyPrices.prices)
   const sorted =
@@ -89,8 +79,8 @@ export default function Nav() {
 
   return (
     <StyledNav>
-      <NavLink to="">Home</NavLink>
-      <NavLink to="price/me">My Prices</NavLink>
+      <NavLink to="/" exact>Home</NavLink>
+      <NavLink to="/price/me">My Prices</NavLink>
       <Dropdown
         button={props => <NavButton {...props}>Past Prices</NavButton>}
       >
@@ -99,7 +89,7 @@ export default function Nav() {
 
           return (
             <li key={start.valueOf()}>
-              <NavLink to={`price/me/${r.year}/${r.week}`}>
+              <NavLink to={`/price/me/${r.year}/${r.week}`}>
                 {formatWeekDiff(start, now)}
               </NavLink>
             </li>

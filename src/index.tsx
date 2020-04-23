@@ -13,6 +13,7 @@ import { rootReducer } from "./redux/reducers"
 
 import './index.css'
 import rootSaga from './sagas'
+import { HashRouter } from 'react-router-dom'
 
 dayjs.extend(isoWeek)
 
@@ -28,7 +29,9 @@ sagaMiddleware.run(rootSaga)
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <HashRouter>
+        <App />
+      </HashRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

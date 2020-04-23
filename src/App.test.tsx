@@ -1,7 +1,7 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
-import { fireEvent } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 
 import { rootReducer } from "./redux/reducers"
 import App from './App'
@@ -14,7 +14,7 @@ import { WeekPriceRecord } from 'models'
 const store = createStore(rootReducer)
 
 test('View current price with no history', async () => {
-  const rendered = renderWithRouter(
+  const rendered = render(
     <Provider store={store}>
       <App />
     </Provider>

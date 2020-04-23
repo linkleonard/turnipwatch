@@ -1,5 +1,5 @@
 import React from 'react'
-import { RouteComponentProps } from '@reach/router'
+import { RouteComponentProps, useRouteMatch } from 'react-router-dom'
 import styled from 'styled-components'
 
 import WeekPriceHistoryGraph from './WeekPriceHistoryGraph'
@@ -11,13 +11,13 @@ const Container = styled.section`
 padding: 20px 0 50px 0;
 `
 
-interface RouteProps extends RouteComponentProps {
-  year?: number,
-  week?: number,
+interface RouteProps {
+  year?: string,
+  week?: string,
 }
 
-function Component(props: RouteProps) {
-  const { year, week } = props
+function Component(props: RouteComponentProps) {
+  const { year, week } = useRouteMatch<RouteProps>("/price/me/:year/:week")?.params || {}
   const key = `${year}-${week}`
   const priceRecord = useSelector((state: RootState) => state.weeklyPrices.prices)[key]?.record ?? EmptyPriceRecord
 

@@ -1,6 +1,9 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { Router, RouteComponentProps } from '@reach/router'
+import {
+  Switch,
+  Route,
+} from "react-router-dom"
 
 import logo from './logo.png'
 import './App.css'
@@ -29,32 +32,22 @@ function Header() {
   )
 }
 
-function Home(props: RouteComponentProps) {
+function Home() {
   return <div />
-}
-
-interface InAppProps extends RouteComponentProps {
-  children: ReactNode
-}
-
-function InApp(props: InAppProps) {
-  return (
-    <div className="App">
-      <Header />
-      {props.children}
-    </div>
-  )
 }
 
 function App() {
   return (
-    <Router>
-      <InApp path="/">
-        <EditPrice path="price/me" />
-        <ViewPrice path="price/me/:year/:week" />
-        <Home path="/" />
-      </InApp>
-    </Router>
+    <div>
+      <Header />
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route path="/price/me" component={EditPrice} exact />
+        <Route path="/price/me/:year/:week" component={ViewPrice} />
+      </Switch>
+    </div>
   )
 }
 
